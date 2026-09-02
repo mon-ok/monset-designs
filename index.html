@@ -9,7 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Mulish:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="is-loading">
+  <noscript><style>.loader{display:none;}</style></noscript>
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-brand">
+        <svg class="loader-mark" viewBox="0 0 48 32" width="52" height="35" aria-hidden="true">
+          <path class="loader-mark-fill" d="M2 28 L14 10 L20 18 L28 4 L46 28 Z" />
+          <path class="loader-mark-stroke" pathLength="1" d="M2 28 L14 10 L20 18 L28 4 L46 28 Z" />
+        </svg>
+        <span class="loader-word">Monset Designs</span>
+      </div>
+      <div class="loader-bar"><span></span></div>
+    </div>
+  </div>
+
   <header class="nav" id="nav">
     <div class="nav-inner">
       <a class="brand" href="#top" aria-label="Monset Designs — home">

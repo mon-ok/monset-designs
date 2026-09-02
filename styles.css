@@ -45,6 +45,101 @@ body {
 
 a { color: inherit; }
 
+body.is-loading { overflow: hidden; }
+
+/* ============ Loading screen ============ */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--dark) 0%, var(--pine-dark) 60%, var(--pine) 100%);
+  transition: opacity 0.5s var(--ease), visibility 0.5s var(--ease);
+}
+
+.loader.loader--done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: loaderIn 0.5s var(--ease) forwards 0.1s;
+}
+
+.loader-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.loader-word {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  color: var(--dark-text);
+}
+
+.loader-mark-fill {
+  fill: var(--amber);
+  opacity: 0;
+  animation: loaderFillIn 0.4s ease forwards;
+  animation-delay: 0.55s;
+}
+
+.loader-mark-stroke {
+  fill: none;
+  stroke: var(--dark-text);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: loaderDraw 0.55s var(--ease) forwards 0.1s, loaderFadeOut 0.3s ease forwards 0.55s;
+}
+
+.loader-bar {
+  width: 120px;
+  height: 2px;
+  background: rgba(245, 246, 243, 0.16);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loader-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--amber);
+  animation: loaderBar 0.7s var(--ease) forwards 0.2s;
+}
+
+@keyframes loaderIn { to { opacity: 1; transform: translateY(0); } }
+@keyframes loaderDraw { to { stroke-dashoffset: 0; } }
+@keyframes loaderFillIn { to { opacity: 1; } }
+@keyframes loaderFadeOut { to { opacity: 0; } }
+@keyframes loaderBar { to { width: 100%; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .loader { transition: opacity 0.2s linear; }
+  .loader-inner, .loader-mark-fill, .loader-mark-stroke, .loader-bar span {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+    width: 100% !important;
+  }
+}
+
 /* ============ Reveal / animation primitives ============ */
 [data-animate] {
   opacity: 0;

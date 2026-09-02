@@ -138,12 +138,27 @@ const revealObserver = new IntersectionObserver(
 );
 revealTargets.forEach((el) => revealObserver.observe(el));
 
-/* ============ Hero load-in ============ */
-window.requestAnimationFrame(() => {
-  window.requestAnimationFrame(() => {
+/* ============ Loading screen + hero load-in ============ */
+const loader = document.getElementById("loader");
+const MIN_LOADER_MS = 700;
+const loaderStart = performance.now();
+
+function hideLoader() {
+  const elapsed = performance.now() - loaderStart;
+  const wait = Math.max(0, MIN_LOADER_MS - elapsed);
+  window.setTimeout(() => {
+    loader.classList.add("loader--done");
+    document.body.classList.remove("is-loading");
     document.getElementById("hero-headline").classList.add("is-visible");
-  });
-});
+    window.setTimeout(() => loader.remove(), 550);
+  }, wait);
+}
+
+if (document.readyState === "complete") {
+  hideLoader();
+} else {
+  window.addEventListener("load", hideLoader);
+}
 
 /* ============ Nav: scrolled state + mobile menu ============ */
 const nav = document.getElementById("nav");
