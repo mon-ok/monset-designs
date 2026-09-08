@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monset — Is your business digitally competitive?</title>
+    <meta
+      name="description"
+      content="Monset builds the digital backbone for growing businesses: websites, admin dashboards, data analysis, and CRM. Climb from friction to your peak."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Mulish:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="is-loading">
+    <noscript
+      ><style>
+        .loader {
+          display: none;
+        }
+        .scene .sky-dusk {
+          opacity: 1;
+        }
+      </style></noscript
+    >
+
+    <!-- ============ Loader ============ -->
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader-inner">
+        <div class="loader-brand">
+          <svg
+            class="loader-mark"
+            viewBox="0 0 64 48"
+            width="58"
+            height="44"
+            aria-hidden="true"
+          >
+            <polygon class="lm-back" points="38,10 60,44 44,44" />
+            <polygon class="lm-navy" points="8,44 27,16 33,25 24,44" />
+            <polygon class="lm-slate" points="27,16 43,44 24,44 33,25" />
+          </svg>
+          <span class="loader-word">Monset</span>
+        </div>
+        <div class="loader-bar"><span></span></div>
+      </div>
+    </div>
+
+    <!-- ============ The climb scene (fixed camera, world moves) ============ -->
+    <div class="scene" id="scene" aria-hidden="true">
+      <!-- realistic puffy cloud definitions: fractal-noise displaced edges + volume -->
+      <svg class="cloud-defs" width="0" height="0" aria-hidden="true">
+        <defs>
+          <linearGradient id="cloudVol" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff" />
+            <stop offset=".5" stop-color="#eef3fb" />
+            <stop offset="1" stop-color="#c1cfe1" />
+          </linearGradient>
+          <filter
+            id="cloudReal"
+            x="-60%"
+            y="-90%"
+            width="220%"
+            height="280%"
+            color-interpolation-filters="sRGB"
+          >
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="soft" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.011 0.018"
+              numOctaves="4"
+              seed="8"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="soft"
+              in2="noise"
+              scale="46"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+          <filter
+            id="cloudReal2"
+            x="-60%"
+            y="-90%"
+            width="220%"
+            height="280%"
+            color-interpolation-filters="sRGB"
+          >
+            <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="soft" />
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.013 0.021"
+              numOctaves="5"
+              seed="24"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="soft"
+              in2="noise"
+              scale="56"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+          <symbol id="cloud-a" viewBox="0 0 400 190">
+            <g filter="url(#cloudReal)" fill="url(#cloudVol)">
+              <ellipse cx="120" cy="120" rx="92" ry="52" />
+              <ellipse cx="196" cy="86" rx="82" ry="62" />
+              <ellipse cx="270" cy="104" rx="86" ry="56" />
+              <ellipse cx="326" cy="126" rx="66" ry="46" />
+              <ellipse cx="74" cy="128" rx="62" ry="42" />
+              <rect x="52" y="120" width="308" height="50" rx="25" />
+            </g>
+          </symbol>
+          <symbol id="cloud-b" viewBox="0 0 400 190">
+            <g filter="url(#cloudReal2)" fill="url(#cloudVol)">
+              <ellipse cx="100" cy="118" rx="78" ry="48" />
+              <ellipse cx="168" cy="92" rx="70" ry="58" />
+              <ellipse cx="240" cy="80" rx="80" ry="60" />
+              <ellipse cx="308" cy="110" rx="72" ry="50" />
+              <ellipse cx="356" cy="128" rx="52" ry="38" />
+              <rect x="60" y="118" width="300" height="48" rx="24" />
+            </g>
+          </symbol>
+        </defs>
+      </svg>
+
+      <div class="layer sky sky-blue" id="sky-blue"></div>
+      <div class="layer sky sky-dusk" id="sky-dusk"></div>
+      <div class="layer sky sky-gold" id="sky-gold"></div>
+
+      <div class="sun" id="sun"></div>
+
+      <!-- distant range — sinks below you as you gain height -->
+      <div class="range far-ridge" id="far-ridge">
+        <svg viewBox="0 0 1440 400" preserveAspectRatio="none">
+          <polygon
+            class="slope-fill"
+            points="0,400 0,250 190,285 380,220 560,270 760,205 950,265 1150,210 1330,258 1440,232 1440,400"
+          />
+        </svg>
+      </div>
+
+      <!-- THE solitary peak — distant at the base, grows as you fly toward it -->
+      <div class="peak" id="peak">
+        <svg viewBox="0 0 800 640" preserveAspectRatio="xMidYMax meet">
+          <defs>
+            <linearGradient id="peakLight" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fbe6b4" />
+              <stop offset=".5" stop-color="#e0a85e" />
+              <stop offset="1" stop-color="#8a4e2a" />
+            </linearGradient>
+            <linearGradient id="peakDark" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#b9793f" />
+              <stop offset=".55" stop-color="#6e3115" />
+              <stop offset="1" stop-color="#3c1a0a" />
+            </linearGradient>
+          </defs>
+          <polygon fill="url(#peakLight)" points="400,60 140,640 400,640" />
+          <polygon fill="url(#peakDark)" points="400,60 400,640 660,640" />
+          <polygon
+            fill="#fdf1d6"
+            opacity=".92"
+            points="400,60 452,175 400,150 350,175"
+          />
+        </svg>
+      </div>
+
+      <!-- mid range — sinks faster (you pass its height) -->
+      <div class="range mid-slope" id="mid-slope">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="none">
+          <polygon
+            class="slope-fill"
+            points="0,900 0,300 230,380 430,220 640,320 860,180 1080,300 1290,200 1440,280 1440,900"
+          />
+        </svg>
+      </div>
+
+      <!-- puffy clouds that blow across on the wind; you rise up into them mid-climb -->
+      <div class="cloud-field" id="cloud-field">
+        <div
+          class="cloud"
+          style="
+            top: 22%;
+            left: 70%;
+            --s: 1.05;
+            --dur: 64s;
+            --to: -175vw;
+            --bdur: 8s;
+            --ddelay: -6s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-a" /></svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cloud"
+          style="
+            top: 13%;
+            left: 118%;
+            --s: 1.25;
+            --dur: 82s;
+            --to: -185vw;
+            --bdur: 11s;
+            --ddelay: -40s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-b" /></svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cloud"
+          style="
+            top: 40%;
+            left: 44%;
+            --s: 0.82;
+            --dur: 52s;
+            --to: -165vw;
+            --bdur: 7s;
+            --ddelay: -24s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-b" /></svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cloud"
+          style="
+            top: 52%;
+            left: 96%;
+            --s: 1;
+            --dur: 74s;
+            --to: -178vw;
+            --bdur: 9s;
+            --ddelay: -58s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-a" /></svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cloud"
+          style="
+            top: 60%;
+            left: 140%;
+            --s: 1.3;
+            --dur: 96s;
+            --to: -192vw;
+            --bdur: 12s;
+            --ddelay: -16s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-a" /></svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cloud"
+          style="
+            top: 7%;
+            left: 26%;
+            --s: 0.7;
+            --dur: 58s;
+            --to: -162vw;
+            --bdur: 6s;
+            --ddelay: -49s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-b" /></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- near ground + lit switchback trail — the base you start on, falls away as you climb -->
+      <div class="range near-slope" id="near-slope">
+        <svg viewBox="0 0 1440 1400" preserveAspectRatio="none">
+          <path
+            class="slope-fill-near"
+            d="M0,1400 L0,520 L210,470 L430,360 L620,420 L840,270 L1040,330 L1240,210 L1440,280 L1440,1400 Z"
+          />
+          <path
+            class="trail-band"
+            fill="none"
+            d="M720,1380 C560,1240 900,1160 720,1030 C560,910 950,830 700,700 C520,590 970,520 720,390 C590,320 820,280 720,210"
+          />
+          <path
+            class="trail-dash"
+            fill="none"
+            d="M720,1380 C560,1240 900,1160 720,1030 C560,910 950,830 700,700 C520,590 970,520 720,390 C590,320 820,280 720,210"
+          />
+        </svg>
+      </div>
+
+      <!-- puffy sea of clouds that swallows the bottom of the screen at the summit -->
+      <div class="cloud-sea" id="cloud-sea">
+        <div class="sea-fill"></div>
+        <div
+          class="cloud sea-cloud"
+          style="
+            bottom: 8%;
+            left: 80%;
+            --s: 1.6;
+            --dur: 120s;
+            --to: -200vw;
+            --bdur: 14s;
+            --ddelay: -20s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-a" /></svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cloud sea-cloud"
+          style="
+            bottom: 2%;
+            left: 140%;
+            --s: 1.8;
+            --dur: 150s;
+            --to: -210vw;
+            --bdur: 16s;
+            --ddelay: -82s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-b" /></svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cloud sea-cloud"
+          style="
+            bottom: 12%;
+            left: 40%;
+            --s: 1.5;
+            --dur: 110s;
+            --to: -196vw;
+            --bdur: 12s;
+            --ddelay: -52s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-b" /></svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="cloud sea-cloud"
+          style="
+            bottom: 5%;
+            left: 112%;
+            --s: 1.7;
+            --dur: 135s;
+            --to: -205vw;
+            --bdur: 15s;
+            --ddelay: -12s;
+          "
+        >
+          <div class="cloud-billow">
+            <div class="cloud-drift">
+              <svg class="cloud-svg"><use href="#cloud-a" /></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- sea of clouds that swallows the bottom of the screen at the summit -->
+    </div>
+
+    <!-- ============ Trail rail (climbs upward) ============ -->
+    <nav class="trail" id="trail" aria-label="Climb progress">
+      <span class="trail-line" aria-hidden="true"></span>
+      <span class="trail-marker" id="trail-marker" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="14" height="14">
+          <polygon points="8,1 15,15 1,15" />
+        </svg>
+      </span>
+      <!-- column-reverse in CSS puts base camp at the bottom, summit at the top -->
+      <a href="#top" class="trail-dot" data-label="Base camp"><span></span></a>
+      <a href="#friction" class="trail-dot" data-label="Lower slopes"
+        ><span></span
+      ></a>
+      <a href="#grow" class="trail-dot" data-label="The ascent"
+        ><span></span
+      ></a>
+      <a href="#work" class="trail-dot" data-label="The trail"><span></span></a>
+      <a href="#basin" class="trail-dot" data-label="The summit"
+        ><span></span
+      ></a>
+    </nav>
+
+    <!-- ============ Nav ============ -->
+    <header class="nav" id="nav">
+      <div class="nav-inner">
+        <a class="brand" href="#top" aria-label="Monset — home">
+          <svg
+            class="mark"
+            viewBox="0 0 64 48"
+            width="30"
+            height="23"
+            aria-hidden="true"
+          >
+            <polygon class="m-back" points="38,10 60,44 44,44" />
+            <polygon class="m-navy" points="8,44 27,16 33,25 24,44" />
+            <polygon class="m-slate" points="27,16 43,44 24,44 33,25" />
+          </svg>
+          <span class="brand-word"
+            >Monset<span class="brand-co">.co</span></span
+          >
+        </a>
+        <nav class="nav-links" id="nav-links">
+          <a href="#friction">Friction</a>
+          <a href="#grow">Growth</a>
+          <a href="#work">Our work</a>
+          <a href="#basin">The summit</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-primary btn-sm" href="#basin">Start the climb</a>
+          <button
+            class="nav-toggle"
+            id="nav-toggle"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============ Hero — base camp (fly-through) ============ -->
+      <section class="hero act" id="top" data-cam="hero">
+        <div class="stage">
+          <div class="wrap hero-inner">
+            <p class="hero-alt">Base camp</p>
+            <h1 class="hero-headline" id="hero-headline">
+              Is your business<br />digitally competitive?
+            </h1>
+            <p class="hero-sub load-fade" style="animation-delay: 0.75s">
+              Most businesses run on scattered tools and gut feel. We build the
+              system underneath &mdash; website, dashboard, data, and CRM
+              &mdash; so every step takes you higher, from base camp to your
+              peak.
+            </p>
+            <div class="hero-actions load-fade" style="animation-delay: 0.95s">
+              <a class="btn btn-primary btn-lg" href="#basin">
+                Start the climb
+                <svg
+                  class="btn-chev"
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 9l6 6 6-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+              <a class="btn btn-ghost btn-lg" href="#friction"
+                >See what&rsquo;s slowing you down</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="scroll-cue load-fade"
+          style="animation-delay: 1.2s"
+          aria-hidden="true"
+        >
+          <span>Scroll to ascend</span>
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path
+              d="M12 5v14M6 13l6 6 6-6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </section>
+
+      <!-- ============ Friction — the lower slopes ============ -->
+      <section class="act" id="friction" data-cam="hold">
+        <div class="stage">
+          <div class="wrap">
+            <header class="section-head">
+              <p class="eyebrow">The lower slopes</p>
+              <h2 class="section-title">
+                Friction points businesses deal with
+              </h2>
+              <p class="section-note">
+                The loose rock underfoot &mdash; what trips a business up before
+                it gains any height.
+              </p>
+            </header>
+            <ul class="friction-grid" id="friction-grid"></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Growth — the ascent ============ -->
+      <section class="act" id="grow" data-cam="hold">
+        <div class="stage">
+          <div class="wrap">
+            <header class="section-head">
+              <p class="eyebrow">The ascent</p>
+              <h2 class="section-title">How businesses climb</h2>
+              <p class="section-note">
+                Four footholds that turn effort into altitude &mdash; each one a
+                step closer to the peak.
+              </p>
+            </header>
+            <div class="grow-grid" id="grow-grid"></div>
+            <div class="mid-cta">
+              <a class="btn btn-primary btn-lg" href="#basin"
+                >Rope in &mdash; start your climb
+                <svg
+                  class="btn-chev"
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 9l6 6 6-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Work — the trail so far ============ -->
+      <section class="act" id="work" data-cam="hold">
+        <div class="stage">
+          <div class="wrap">
+            <header class="section-head">
+              <p class="eyebrow">The trail so far</p>
+              <h2 class="section-title">Here&rsquo;s our work</h2>
+              <p class="section-note">
+                Real projects, running live. Open one to preview it without
+                leaving the climb.
+              </p>
+            </header>
+            <div class="work-grid" id="project-grid"></div>
+            <div class="stack">
+              <p class="stack-label">Built and connected with</p>
+              <div class="marquee" aria-hidden="true">
+                <div class="marquee-track" id="marquee-track"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Fly-through beat — above the clouds ============ -->
+      <section class="act beat" id="beat" data-cam="fly" aria-hidden="true">
+        <div class="stage">
+          <p class="beat-line">Above the clouds now.</p>
+          <p class="beat-sub">One last push to the summit.</p>
+        </div>
+      </section>
+
+      <!-- ============ Basin — the summit funnel ============ -->
+      <section class="act basin" id="basin" data-cam="hold">
+        <div class="stage">
+          <div class="wrap basin-inner">
+            <header class="section-head basin-head">
+              <p class="eyebrow eyebrow-center">The summit</p>
+              <h2 class="section-title">You&rsquo;ve reached the peak</h2>
+              <p class="section-note">
+                Tell us where you&rsquo;re starting from and where you want to
+                reach. We&rsquo;ll plot the route &mdash; no pressure, just a
+                plan.
+              </p>
+            </header>
+
+            <div class="basin-card">
+              <div class="field-row">
+                <label class="field">
+                  <span>Business name</span>
+                  <input
+                    type="text"
+                    id="f-business"
+                    placeholder="e.g. Huna-Huna Cliff Resort"
+                    autocomplete="organization"
+                  />
+                </label>
+                <label class="field">
+                  <span>Email</span>
+                  <input
+                    type="email"
+                    id="f-email"
+                    placeholder="you@business.com"
+                    autocomplete="email"
+                  />
+                </label>
+              </div>
+
+              <div class="field">
+                <span>What do you need?</span>
+                <div
+                  class="chips"
+                  id="need-chips"
+                  role="group"
+                  aria-label="What do you need"
+                >
+                  <button type="button" class="chip" data-need="Website">
+                    Website
+                  </button>
+                  <button
+                    type="button"
+                    class="chip"
+                    data-need="Admin dashboard"
+                  >
+                    Admin dashboard
+                  </button>
+                  <button type="button" class="chip" data-need="Data analysis">
+                    Data analysis
+                  </button>
+                  <button type="button" class="chip" data-need="CRM">
+                    CRM
+                  </button>
+                  <button type="button" class="chip" data-need="Not sure yet">
+                    Not sure yet
+                  </button>
+                </div>
+              </div>
+
+              <label class="field">
+                <span>Anything you want to ask or explain?</span>
+                <textarea
+                  id="f-message"
+                  rows="4"
+                  placeholder="A little about where you're stuck, or a question for us."
+                ></textarea>
+              </label>
+
+              <div class="basin-actions">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg"
+                  id="send-brief"
+                >
+                  Send our team the details
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost btn-lg"
+                  id="ask-question"
+                >
+                  Ask us a question
+                </button>
+              </div>
+              <p class="basin-fineprint" id="form-note">
+                Opens your email with everything filled in &mdash; you stay in
+                control of what&rsquo;s sent.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ Footer ============ -->
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <a class="footer-brand" href="#top">
+          <svg
+            class="mark"
+            viewBox="0 0 64 48"
+            width="26"
+            height="20"
+            aria-hidden="true"
+          >
+            <polygon class="m-back" points="38,10 60,44 44,44" />
+            <polygon class="m-navy" points="8,44 27,16 33,25 24,44" />
+            <polygon class="m-slate" points="27,16 43,44 24,44 33,25" />
+          </svg>
+          <span>Monset<span class="brand-co">.co</span></span>
+        </a>
+        <p class="footer-tagline">From base camp to the summit.</p>
+        <p class="footer-meta">
+          &copy; <span id="year"></span> Monset. Built in Cebu, Philippines.
+        </p>
+      </div>
+    </footer>
+
+    <!-- ============ Work preview modal ============ -->
+    <div class="modal" id="modal" hidden>
+      <div
+        class="modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <div class="modal-bar">
+          <h3 id="modal-title">Preview</h3>
+          <div class="modal-bar-actions">
+            <a
+              id="modal-newtab"
+              class="btn btn-ghost btn-sm"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              >Open in new tab</a
+            >
+            <button
+              id="modal-close"
+              class="modal-close"
+              aria-label="Close preview"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+        <p class="modal-hint" id="modal-hint"></p>
+        <div class="modal-frame-wrap">
+          <iframe
+            id="modal-frame"
+            title="Project preview"
+            src="about:blank"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Libraries (scroll scene) ============ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
