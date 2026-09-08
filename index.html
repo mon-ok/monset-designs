@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Mulish:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Mulish:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -402,21 +402,26 @@
         </svg>
       </span>
       <!-- column-reverse in CSS puts base camp at the bottom, summit at the top -->
-      <a href="#top" class="trail-dot" data-label="Base camp"><span></span></a>
-      <a href="#friction" class="trail-dot" data-label="Lower slopes"
+      <a href="#top" class="trail-dot" data-label="Home"><span></span></a>
+      <a href="#friction" class="trail-dot" data-label="Challenges"
         ><span></span
       ></a>
-      <a href="#grow" class="trail-dot" data-label="The ascent"
+      <a href="#grow" class="trail-dot" data-label="How We Help"
         ><span></span
       ></a>
-      <a href="#services" class="trail-dot" data-label="What we do"
+      <a href="#services" class="trail-dot" data-label="Services"
         ><span></span
       ></a>
-      <a href="#work" class="trail-dot" data-label="The trail"><span></span></a>
-      <a href="#basin" class="trail-dot" data-label="The summit"
+      <a href="#work" class="trail-dot" data-label="Work"><span></span></a>
+      <a href="#basin" class="trail-dot" data-label="Contact"
         ><span></span
       ></a>
     </nav>
+
+    <!-- ============ Mobile climb progress (trail-rail equivalent under 1180px) ============ -->
+    <div class="mobile-progress" id="mobile-progress" aria-hidden="true">
+      <span id="mobile-progress-fill"></span>
+    </div>
 
     <!-- ============ Nav ============ -->
     <header class="nav" id="nav">
@@ -438,14 +443,14 @@
           >
         </a>
         <nav class="nav-links" id="nav-links">
-          <a href="#friction">Friction</a>
-          <a href="#grow">Growth</a>
-          <a href="#services">What we do</a>
-          <a href="#work">Our work</a>
-          <a href="#basin">The summit</a>
+          <a href="#friction">Challenges</a>
+          <a href="#grow">How We Help</a>
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#basin">Contact</a>
         </nav>
         <div class="nav-actions">
-          <a class="btn btn-primary btn-sm" href="#basin">Start the climb</a>
+          <a class="btn btn-primary btn-sm" href="#basin">Get started</a>
           <button
             class="nav-toggle"
             id="nav-toggle"
@@ -463,19 +468,18 @@
       <section class="hero act" id="top" data-cam="hero">
         <div class="stage">
           <div class="wrap hero-inner">
-            <p class="hero-alt">Base camp</p>
             <h1 class="hero-headline" id="hero-headline">
               Is your business<br />digitally competitive?
             </h1>
             <p class="hero-sub load-fade" style="animation-delay: 0.75s">
-              Most businesses run on scattered tools and gut feel. We build the
-              system underneath &mdash; website, dashboard, data, and CRM
-              &mdash; so every step takes you higher, from base camp to your
-              peak.
+              We're the team behind your leads: websites, automation, and
+              follow-up systems that turn more visitors into paying
+              customers, replying to new enquiries in minutes instead of
+              days.
             </p>
             <div class="hero-actions load-fade" style="animation-delay: 0.95s">
               <a class="btn btn-primary btn-lg" href="#basin">
-                Start the climb
+                Get started
                 <svg
                   class="btn-chev"
                   viewBox="0 0 24 24"
@@ -523,13 +527,9 @@
         <div class="stage">
           <div class="wrap">
             <header class="section-head">
-              <p class="eyebrow">The lower slopes</p>
-              <h2 class="section-title">
-                Friction points businesses deal with
-              </h2>
+              <h2 class="section-title">Problems we see all the time</h2>
               <p class="section-note">
-                The loose rock underfoot &mdash; what trips a business up before
-                it gains any height.
+                The small stuff that quietly slows a growing business down.
               </p>
             </header>
             <ul class="friction-grid" id="friction-grid"></ul>
@@ -542,17 +542,16 @@
         <div class="stage">
           <div class="wrap">
             <header class="section-head">
-              <p class="eyebrow">The ascent</p>
-              <h2 class="section-title">How businesses climb</h2>
+              <h2 class="section-title">How we help you grow</h2>
               <p class="section-note">
-                Four footholds that turn effort into altitude &mdash; each one a
-                step closer to the peak.
+                Four things that make the biggest difference once they're in
+                place.
               </p>
             </header>
-            <div class="grow-grid" id="grow-grid"></div>
+            <div class="compare" id="compare"></div>
             <div class="mid-cta">
               <a class="btn btn-primary btn-lg" href="#basin"
-                >Rope in &mdash; start your climb
+                >Get started
                 <svg
                   class="btn-chev"
                   viewBox="0 0 24 24"
@@ -580,14 +579,16 @@
         <div class="stage">
           <div class="wrap">
             <header class="section-head">
-              <p class="eyebrow">The kit</p>
               <h2 class="section-title">What we do</h2>
               <p class="section-note">
-                The gear we bring to the climb &mdash; take one piece, or let us
-                fit the whole system together.
+                Take one piece, or let us build the whole system for you.
               </p>
             </header>
             <div class="svc-grid" id="svc-grid"></div>
+            <p class="svc-footnote">
+              And so much more — whatever your digital infrastructure needs,
+              we'll fit it.
+            </p>
           </div>
         </div>
       </section>
@@ -595,16 +596,19 @@
       <!-- ============ Work — the trail so far ============ -->
       <section class="act" id="work" data-cam="hold">
         <div class="stage">
+          <div class="stage-content">
+            <div class="wrap">
+              <header class="section-head">
+                <h2 class="section-title">Our work</h2>
+                <p class="section-note">
+                  Practice builds we made to show our craft, not paid client
+                  work yet. Open one to preview it live.
+                </p>
+              </header>
+              <div class="work-grid" id="project-grid"></div>
+            </div>
+          </div>
           <div class="wrap">
-            <header class="section-head">
-              <p class="eyebrow">The trail so far</p>
-              <h2 class="section-title">Here&rsquo;s our work</h2>
-              <p class="section-note">
-                Real projects, running live. Open one to preview it without
-                leaving the climb.
-              </p>
-            </header>
-            <div class="work-grid" id="project-grid"></div>
             <div class="stack">
               <p class="stack-label">Built and connected with</p>
               <div class="marquee" aria-hidden="true">
@@ -618,8 +622,8 @@
       <!-- ============ Fly-through beat — above the clouds ============ -->
       <section class="act beat" id="beat" data-cam="fly" aria-hidden="true">
         <div class="stage">
-          <p class="beat-line">Above the clouds now.</p>
-          <p class="beat-sub">One last push to the summit.</p>
+          <p class="beat-line">Almost there.</p>
+          <p class="beat-sub">Let's make it official.</p>
         </div>
       </section>
 
@@ -628,12 +632,10 @@
         <div class="stage">
           <div class="wrap basin-inner">
             <header class="section-head basin-head">
-              <p class="eyebrow eyebrow-center">The summit</p>
-              <h2 class="section-title">You&rsquo;ve reached the peak</h2>
+              <h2 class="section-title">Let&rsquo;s build your plan</h2>
               <p class="section-note">
-                Tell us where you&rsquo;re starting from and where you want to
-                reach. We&rsquo;ll plot the route &mdash; no pressure, just a
-                plan.
+                Tell us where you&rsquo;re at and where you want to go.
+                We&rsquo;ll put a plan together. No pressure.
               </p>
             </header>
 
@@ -715,8 +717,12 @@
                 </button>
               </div>
               <p class="basin-fineprint" id="form-note">
-                Opens your email with everything filled in &mdash; you stay in
+                Opens your email with everything filled in, so you stay in
                 control of what&rsquo;s sent.
+              </p>
+              <p class="basin-fineprint basin-direct">
+                Mail app not playing along? Email us directly at
+                <a href="mailto:hello@monset.co">hello@monset.co</a>.
               </p>
             </div>
           </div>
@@ -741,7 +747,6 @@
           </svg>
           <span>Monset<span class="brand-co">.co</span></span>
         </a>
-        <p class="footer-tagline">From base camp to the summit.</p>
         <p class="footer-meta">
           &copy; <span id="year"></span> Monset. Built in Cebu, Philippines.
         </p>

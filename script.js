@@ -17,134 +17,90 @@ const svg = (p) =>
    ===================================================================== */
 const FRICTION = [
   {
-    t: "Manual, inefficient logs",
-    d: "Notebooks and chat threads instead of a source of truth.",
-    i: svg(
-      '<path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M8 11h6M8 15h4"/>',
-    ),
-  },
-  {
-    t: "Lacking data",
-    d: "Decisions made on gut feel because the numbers aren't there.",
-    i: svg('<path d="M3 3v18h18"/><path d="M7 15l3-3 3 2 4-5"/>'),
-  },
-  {
-    t: "Inventory problems",
-    d: "Stock-outs, over-orders, and mystery shrinkage nobody catches.",
-    i: svg(
-      '<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
-    ),
-  },
-  {
-    t: "Administration backlogs",
-    d: "Paperwork and follow-ups piling up behind day-to-day fires.",
-    i: svg(
-      '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/>',
-    ),
-  },
-  {
-    t: "Report delays & accuracy",
-    d: "By the time the report lands, the moment to act has passed.",
-    i: svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
-  },
-  {
-    t: "Blind business tracking",
-    d: "No live view of profit, gross, or where the money actually goes.",
-    i: svg(
-      '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
-    ),
-  },
-  {
-    t: "Disconnected tools",
-    d: "Five apps that don't talk, so the same data gets keyed in twice.",
+    t: "Scattered tools that don't talk to each other",
     i: svg(
       '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4a2 2 0 0 1 2 2V14M6.5 10v4a2 2 0 0 0 2 2H14"/>',
     ),
   },
   {
-    t: "Missed customer follow-up",
-    d: "Leads and repeat guests slip through an inbox nobody owns.",
+    t: "Decisions made on gut feel, not real numbers",
+    i: svg('<path d="M3 3v18h18"/><path d="M7 15l3-3 3 2 4-5"/>'),
+  },
+  {
+    t: "Leads and messages that slip through the cracks",
     i: svg(
       '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/>',
     ),
   },
   {
-    t: "Revenue leaks",
-    d: "Small unbilled extras and discounts that quietly add up.",
+    t: "Hours lost to manual admin every week",
+    i: svg(
+      '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/>',
+    ),
+  },
+  {
+    t: "No live view of profit or cash flow",
+    i: svg(
+      '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
+    ),
+  },
+  {
+    t: "Small billing mistakes that quietly cost you",
     i: svg(
       '<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
     ),
   },
-  {
-    t: "Double-bookings & clashes",
-    d: "Two guests, one room — scheduling errors you find out about late.",
-    i: svg(
-      '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/>',
-    ),
-  },
 ];
 
-const PILLARS = [
+/* Growth section — a straight before/after contrast, not a duplicate feature
+   list (Services below already covers the concrete deliverables). */
+const COMPARISON = [
   {
-    t: "Website",
-    d: "Get seen. A fast, modern site pulls in attention and turns quiet interest into real enquiries.",
-    i: svg(
-      '<rect x="2" y="4" width="20" height="14" rx="2"/><path d="M2 9h20M6 18v2M18 18v2M8 20h8"/>',
-    ),
-    stats: [
-      "<b>75%</b> judge credibility on design*",
-      "<b>2×</b> more reach than social alone*",
-    ],
+    without: "Invisible online, or stuck with an outdated site",
+    withUs: "A modern site that turns visitors into real enquiries",
   },
   {
-    t: "Admin dashboard",
-    d: "See profit, gross, and expenses the moment they happen — and decide your next move with real ground under you.",
-    i: svg(
-      '<path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/>',
-    ),
+    without: "Checking three spreadsheets to know if you're making money",
+    withUs: "Profit and cash flow visible the moment they happen",
   },
   {
-    t: "Data analysis & synthesis",
-    d: "We turn your numbers into a read on how the business is doing — and surface the growth hiding inside them.",
-    i: svg(
-      '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M8 11l2 2 3-4"/>',
-    ),
+    without: "Decisions made on gut feel",
+    withUs: "Clear answers about what's actually working",
   },
   {
-    t: "CRM",
-    d: "One seamless thread for every customer, from first hello to repeat booking. Nothing slips.",
-    i: svg(
-      '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 7.5a3 3 0 0 1 0 5M18 20a6 6 0 0 0-3-5.2"/>',
-    ),
+    without: "Leads and messages slipping through the cracks",
+    withUs: "Every customer followed up, automatically",
   },
 ];
+const compareXIcon = svg('<path d="M6 6l12 12M18 6L6 18"/>');
+const compareCheckIcon = svg('<path d="M5 12l5 5L19 7"/>');
 
 /* What we do — the concrete services (the "kit") */
 const SERVICES = [
   {
     t: "Websites & platforms",
-    d: "Fast marketing sites, plus full CRM, POS and dashboard platforms built on your real data.",
+    d: "Marketing sites, plus full CRM, POS, and dashboard platforms, all built around your real data.",
     i: svg(
       '<rect x="2" y="4" width="20" height="14" rx="2"/><path d="M2 9h20M8 20h8M12 18v2"/>',
     ),
   },
   {
     t: "AI digital receptionist",
-    d: "An always-on assistant that answers, books, and follows up across chat and Messenger.",
+    d: "Answers, books, and follows up around the clock, so a lead at 11pm gets a reply in seconds, not the next morning.",
     i: svg(
       '<path d="M12 3a7 7 0 0 0-7 7v4a3 3 0 0 0 3 3M12 3a7 7 0 0 1 7 7v4a3 3 0 0 1-3 3h-3"/><path d="M4 14v-2a2 2 0 0 1 2-2M20 14v-2a2 2 0 0 0-2-2"/>',
     ),
   },
   {
     t: "Workflow automation",
-    d: "We wire your tools together with n8n and AI so the repetitive busywork runs itself.",
+    d: "We connect your tools with automation, so work that used to take 4 hours can run in under 2 minutes.",
     i: svg(
       '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
     ),
   },
   {
     t: "Digital marketing",
-    d: "Get found and fill the pipeline — search, social, and campaigns built to convert.",
+    d: "Show up first when people search for your service nearby, on Google and in AI answers, not buried on page two.",
     i: svg(
       '<path d="M3 11l16-6v14L3 13v-2z"/><path d="M7 12v5a2 2 0 0 0 4 0"/><path d="M19 8a3 3 0 0 1 0 6"/>',
     ),
@@ -156,7 +112,7 @@ const PROJECTS = [
     name: "Hunahuna Beach Resort",
     tag: "React + Vite + Supabase",
     description:
-      "Resort marketing site and booking platform on a real Supabase backend — rooms, menu, gallery. Live booking writes are intentionally disabled.",
+      "Resort marketing site and booking platform on a real Supabase backend: rooms, menu, gallery. Live booking writes are intentionally disabled.",
     thumb: "assets/hunahuna.png",
     live: "https://hunahuna-site.vercel.app/",
   },
@@ -180,7 +136,7 @@ const PROJECTS = [
     name: "Agency Template",
     tag: "Static HTML / CSS / JS",
     description:
-      "Editorial agency template — layered hero where a photo overlaps a giant headline, heavy scroll animation throughout.",
+      "Editorial agency template with a layered hero where a photo overlaps a giant headline, heavy scroll animation throughout.",
     thumb: "assets/agency.png",
     live: "https://showcase-agency.vercel.app/",
   },
@@ -258,7 +214,7 @@ document.getElementById("friction-grid").innerHTML = FRICTION.map(
   (f) => `
   <li class="friction-item">
     <span class="friction-icon">${f.i}</span>
-    <div class="friction-text"><h3>${f.t}</h3><p>${f.d}</p></div>
+    <p class="friction-text">${f.t}</p>
   </li>`,
 ).join("");
 
@@ -271,16 +227,20 @@ document.getElementById("svc-grid").innerHTML = SERVICES.map(
   </article>`,
 ).join("");
 
-document.getElementById("grow-grid").innerHTML = PILLARS.map(
-  (p, i) => `
-  <article class="grow-card" style="transition-delay:${i * 70}ms">
-    <p class="grow-num">Foothold ${i + 1}</p>
-    <span class="grow-icon">${p.i}</span>
-    <h3>${p.t}</h3>
-    <p>${p.d}</p>
-    ${p.stats ? `<div class="grow-stats">${p.stats.map((s) => `<span class="grow-stat">${s}</span>`).join("")}</div>` : ""}
-  </article>`,
-).join("");
+document.getElementById("compare").innerHTML =
+  `<p class="compare-label compare-label-without">Most businesses</p>` +
+  `<p class="compare-label compare-label-with">With Monset</p>` +
+  COMPARISON.map(
+    (c, i) => `
+  <div class="compare-item compare-without" style="transition-delay:${i * 70}ms">
+    <span class="compare-icon">${compareXIcon}</span>
+    <p>${c.without}</p>
+  </div>
+  <div class="compare-item compare-with" style="transition-delay:${i * 70}ms">
+    <span class="compare-icon">${compareCheckIcon}</span>
+    <p>${c.withUs}</p>
+  </div>`,
+  ).join("");
 
 const grid = document.getElementById("project-grid");
 PROJECTS.forEach((project, i) => {
@@ -288,7 +248,9 @@ PROJECTS.forEach((project, i) => {
   card.className = "card";
   card.style.transitionDelay = `${i * 80}ms`;
   card.innerHTML = `
-    <div class="thumb" style="background-image:url('${project.thumb}')"></div>
+    <div class="thumb" style="background-image:url('${project.thumb}')">
+      <span class="card-badge">Demo build</span>
+    </div>
     <div class="body">
       <p class="tag">${project.tag}</p>
       <h3>${project.name}</h3>
@@ -347,6 +309,7 @@ const el = {
   mid: gid("mid-slope"),
   near: gid("near-slope"),
   marker: gid("trail-marker"),
+  mobileFill: gid("mobile-progress-fill"),
 };
 
 // move a range down and slightly back as you rise above it
@@ -358,6 +321,7 @@ function sink(elm, y, scale, opacity) {
 
 function setScene(p) {
   const vh = window.innerHeight;
+  if (el.mobileFill) el.mobileFill.style.width = `${(p * 100).toFixed(1)}%`;
 
   // --- sky cross-fade: blue -> dusk -> gold ---
   el.blue.style.opacity = 1 - band(p, 0.42, 0.72);
@@ -402,7 +366,7 @@ function setScene(p) {
    read, then scales up + lifts + blurs + fades as it passes the camera. */
 function setupActCameras() {
   document.querySelectorAll(".act").forEach((act) => {
-    const stage = act.querySelector(".stage");
+    const stage = act.querySelector(".stage-content") || act.querySelector(".stage");
     if (!stage) return;
     const cam = act.dataset.cam || "hold";
     const fly = cam === "fly" || cam === "hero";
@@ -646,7 +610,7 @@ function openModal(project) {
   modalTitle.textContent = project.name;
   modalNewTab.href = project.live;
   modalHint.textContent =
-    "Live preview. If it doesn't load, the host may block embedding — open it in a new tab instead.";
+    "Live preview. If it doesn't load, the host may block embedding, so open it in a new tab instead.";
   modalFrame.src = project.live;
   modal.hidden = false;
   requestAnimationFrame(() =>

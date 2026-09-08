@@ -23,7 +23,7 @@
   --card: rgba(9, 22, 38, 0.46);
   --glass: rgba(255, 255, 255, 0.06);
 
-  --display: "Montserrat", system-ui, sans-serif;
+  --display: "Sora", system-ui, sans-serif;
   --body: "Mulish", system-ui, sans-serif;
 
   --wrap: 1120px;
@@ -336,9 +336,26 @@ h3 {
 .trail-dot:hover::after {
   opacity: 1;
 }
+.mobile-progress {
+  display: none;
+}
 @media (max-width: 1180px) {
   .trail {
     display: none;
+  }
+  .mobile-progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 60;
+    background: var(--hair-cool);
+  }
+  .mobile-progress span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--bronze-5));
   }
 }
 
@@ -462,11 +479,11 @@ h3 {
 .btn-primary {
   background: linear-gradient(180deg, var(--gold), #e3c072);
   color: #2a1608;
-  box-shadow: 0 8px 22px -10px rgba(240, 212, 143, 0.7);
+  box-shadow: 0 6px 14px -8px rgba(11, 15, 10, 0.55);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 26px -10px rgba(240, 212, 143, 0.85);
+  box-shadow: 0 10px 18px -8px rgba(11, 15, 10, 0.6);
 }
 .btn-ghost {
   background: transparent;
@@ -497,24 +514,6 @@ h3 {
 }
 .hero-inner {
   max-width: 760px;
-}
-.hero-alt {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: var(--gold);
-  letter-spacing: 0.02em;
-  margin-bottom: 1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.hero-alt::before {
-  content: "";
-  width: 26px;
-  height: 1.5px;
-  background: var(--gold);
-  display: inline-block;
 }
 .hero-headline {
   font-size: clamp(2.6rem, 7vw, 5rem);
@@ -584,7 +583,8 @@ h3 {
 .act:not(.hero) {
   padding: 6.5rem 0;
 }
-.stage {
+.stage,
+.stage-content {
   will-change: transform, opacity, filter;
   transform-origin: 50% 42%;
   backface-visibility: hidden;
@@ -616,30 +616,6 @@ h3 {
 .section-head {
   max-width: 46rem;
   margin-bottom: 2.8rem;
-}
-.eyebrow {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 0.82rem;
-  color: var(--gold);
-  letter-spacing: 0.02em;
-  margin-bottom: 0.7rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.eyebrow::before {
-  content: "";
-  width: 22px;
-  height: 1.5px;
-  background: var(--gold);
-  display: inline-block;
-}
-.eyebrow-center {
-  justify-content: center;
-}
-.eyebrow-center::before {
-  display: none;
 }
 .section-title {
   font-size: clamp(1.9rem, 4vw, 2.9rem);
@@ -718,6 +694,13 @@ h3 {
   color: var(--mist);
   font-size: 0.98rem;
 }
+.svc-footnote {
+  margin-top: 1.8rem;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gold);
+}
 
 /* =====================================================================
    Friction grid
@@ -759,104 +742,71 @@ h3 {
   width: 21px;
   height: 21px;
 }
-.friction-text h3 {
+.friction-text {
   font-family: var(--display);
   font-size: 1rem;
   font-weight: 700;
-}
-.friction-text p {
-  margin-top: 0.2rem;
-  font-size: 0.9rem;
-  color: var(--mist-dim);
-  line-height: 1.45;
+  line-height: 1.4;
+  align-self: center;
 }
 
 /* =====================================================================
-   Growth pillars
+   Growth — before/after comparison
    ===================================================================== */
-.grow-grid {
+.compare {
   display: grid;
-  gap: 1.1rem;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem 1.6rem;
 }
-.grow-card {
-  position: relative;
-  padding: 1.9rem 1.8rem;
-  border-radius: 20px;
-  background: var(--card);
-  border: 1px solid var(--hair-cool);
-  backdrop-filter: blur(4px);
-  overflow: hidden;
-  transition:
-    transform 0.25s var(--ease),
-    border-color 0.25s var(--ease);
-}
-.grow-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--hair);
-}
-.grow-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--gold), var(--bronze-5));
-  opacity: 0.8;
-}
-.grow-num {
+.compare-label {
   font-family: var(--display);
   font-weight: 700;
-  font-size: 0.8rem;
-  color: var(--gold);
-  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--hair-cool);
 }
-.grow-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 13px;
-  margin: 0.1rem 0 1rem;
+.compare-label-without {
+  color: var(--mist-dim);
+}
+.compare-label-with {
+  color: var(--gold);
+}
+.compare-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--hair-cool);
+}
+.compare-icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 0.15rem;
+  border-radius: 50%;
   display: grid;
   place-items: center;
-  background: linear-gradient(
-    160deg,
-    rgba(240, 212, 143, 0.16),
-    rgba(134, 76, 44, 0.18)
-  );
-  color: var(--gold);
-  border: 1px solid var(--hair);
 }
-.grow-icon svg {
-  width: 25px;
-  height: 25px;
+.compare-icon svg {
+  width: 12px;
+  height: 12px;
 }
-.grow-card h3 {
-  font-family: var(--display);
-  font-size: 1.3rem;
-  font-weight: 700;
+.compare-without .compare-icon {
+  color: var(--mist-dim);
+  background: rgba(243, 246, 251, 0.08);
 }
-.grow-card p {
-  margin-top: 0.55rem;
-  color: var(--mist);
-  font-size: 0.98rem;
+.compare-without p {
+  color: var(--mist-dim);
+  font-size: 0.95rem;
 }
-.grow-stats {
-  margin-top: 1.1rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+.compare-with .compare-icon {
+  color: var(--base);
+  background: var(--gold);
 }
-.grow-stat {
-  font-family: var(--display);
-  font-size: 0.78rem;
+.compare-with p {
+  color: var(--snow);
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--gold-soft);
-  background: rgba(240, 212, 143, 0.08);
-  border: 1px solid var(--hair);
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-}
-.grow-stat b {
-  color: var(--gold);
 }
 
 /* =====================================================================
@@ -884,10 +834,26 @@ h3 {
   box-shadow: 0 24px 44px -26px rgba(0, 0, 0, 0.8);
 }
 .card .thumb {
+  position: relative;
   aspect-ratio: 16 / 10;
   background-size: cover;
   background-position: top center;
   border-bottom: 1px solid var(--hair-cool);
+}
+.card-badge {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  font-family: var(--display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--snow);
+  background: rgba(9, 22, 38, 0.72);
+  border: 1px solid var(--hair-cool);
+  backdrop-filter: blur(4px);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
 }
 .card .thumb.placeholder {
   display: grid;
@@ -923,14 +889,14 @@ h3 {
 }
 
 .stack {
-  margin-top: 3rem;
+  margin-top: 5.5rem;
 }
 .stack-label {
   text-align: center;
-  color: var(--mist-dim);
+  color: var(--mist);
   font-family: var(--display);
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   margin-bottom: 1.1rem;
 }
 .marquee {
@@ -1092,15 +1058,17 @@ h3 {
   font-size: 0.82rem;
   color: var(--mist-dim);
 }
+.basin-direct {
+  margin-top: 0.4rem;
+}
+.basin-direct a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 /* --- Summit contrast: the sky is bright gold here, so text goes navy and the
    card becomes a clean light panel with dark labels + white inputs. --- */
-.basin .eyebrow {
-  color: var(--gold-soft);
-}
-.basin .eyebrow::before {
-  background: var(--gold-soft);
-}
 .basin .section-title {
   color: var(--gold-soft);
   text-shadow: 0 2px 24px rgba(11, 31, 56, 0.55);
@@ -1178,11 +1146,6 @@ h3 {
   gap: 9px;
   font-family: var(--display);
   font-weight: 800;
-}
-.footer-tagline {
-  color: var(--mist);
-  font-family: var(--display);
-  font-weight: 600;
 }
 .footer-meta {
   color: var(--mist-dim);
@@ -1394,10 +1357,12 @@ body:not(.is-loading) .load-fade {
 }
 
 @media (max-width: 860px) {
-  .grow-grid,
   .svc-grid,
   .work-grid,
   .field-row {
+    grid-template-columns: 1fr;
+  }
+  .compare {
     grid-template-columns: 1fr;
   }
   .nav-toggle {
