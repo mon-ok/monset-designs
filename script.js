@@ -119,6 +119,38 @@ const PILLARS = [
   },
 ];
 
+/* What we do — the concrete services (the "kit") */
+const SERVICES = [
+  {
+    t: "Websites & platforms",
+    d: "Fast marketing sites, plus full CRM, POS and dashboard platforms built on your real data.",
+    i: svg(
+      '<rect x="2" y="4" width="20" height="14" rx="2"/><path d="M2 9h20M8 20h8M12 18v2"/>',
+    ),
+  },
+  {
+    t: "AI digital receptionist",
+    d: "An always-on assistant that answers, books, and follows up across chat and Messenger.",
+    i: svg(
+      '<path d="M12 3a7 7 0 0 0-7 7v4a3 3 0 0 0 3 3M12 3a7 7 0 0 1 7 7v4a3 3 0 0 1-3 3h-3"/><path d="M4 14v-2a2 2 0 0 1 2-2M20 14v-2a2 2 0 0 0-2-2"/>',
+    ),
+  },
+  {
+    t: "Workflow automation",
+    d: "We wire your tools together with n8n and AI so the repetitive busywork runs itself.",
+    i: svg(
+      '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+    ),
+  },
+  {
+    t: "Digital marketing",
+    d: "Get found and fill the pipeline — search, social, and campaigns built to convert.",
+    i: svg(
+      '<path d="M3 11l16-6v14L3 13v-2z"/><path d="M7 12v5a2 2 0 0 0 4 0"/><path d="M19 8a3 3 0 0 1 0 6"/>',
+    ),
+  },
+];
+
 const PROJECTS = [
   {
     name: "Hunahuna Beach Resort",
@@ -228,6 +260,15 @@ document.getElementById("friction-grid").innerHTML = FRICTION.map(
     <span class="friction-icon">${f.i}</span>
     <div class="friction-text"><h3>${f.t}</h3><p>${f.d}</p></div>
   </li>`,
+).join("");
+
+document.getElementById("svc-grid").innerHTML = SERVICES.map(
+  (s) => `
+  <article class="svc-card">
+    <span class="svc-icon">${s.i}</span>
+    <h3>${s.t}</h3>
+    <p>${s.d}</p>
+  </article>`,
 ).join("");
 
 document.getElementById("grow-grid").innerHTML = PILLARS.map(
@@ -472,8 +513,8 @@ document.addEventListener("click", (e) => {
 
 /* active trail dot by section in view */
 const trailDots = [...document.querySelectorAll(".trail-dot")];
-const sections = ["top", "friction", "grow", "work", "basin"].map((id) =>
-  document.getElementById(id),
+const sections = ["top", "friction", "grow", "services", "work", "basin"].map(
+  (id) => document.getElementById(id),
 );
 const sectionObserver = new IntersectionObserver(
   (entries) =>

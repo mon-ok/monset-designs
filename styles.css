@@ -669,6 +669,56 @@ h3 {
   justify-content: center;
 }
 
+/* --- What we do (services) --- */
+.svc-grid {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+.svc-card {
+  padding: 1.9rem 1.8rem;
+  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid var(--hair-cool);
+  backdrop-filter: blur(4px);
+  transition:
+    transform 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+.svc-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--hair);
+}
+.svc-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  background: radial-gradient(
+    circle at 35% 30%,
+    rgba(240, 212, 143, 0.22),
+    rgba(134, 76, 44, 0.14)
+  );
+  border: 1px solid var(--hair);
+}
+.svc-icon svg {
+  width: 26px;
+  height: 26px;
+}
+.svc-card h3 {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.svc-card p {
+  margin-top: 0.55rem;
+  color: var(--mist);
+  font-size: 0.98rem;
+}
+
 /* =====================================================================
    Friction grid
    ===================================================================== */
@@ -1043,6 +1093,69 @@ h3 {
   color: var(--mist-dim);
 }
 
+/* --- Summit contrast: the sky is bright gold here, so text goes navy and the
+   card becomes a clean light panel with dark labels + white inputs. --- */
+.basin .eyebrow {
+  color: var(--gold-soft);
+}
+.basin .eyebrow::before {
+  background: var(--gold-soft);
+}
+.basin .section-title {
+  color: var(--gold-soft);
+  text-shadow: 0 2px 24px rgba(11, 31, 56, 0.55);
+}
+.basin .section-note {
+  color: var(--gold-soft);
+}
+.basin-card {
+  background: rgba(255, 252, 246, 0.86);
+  border-color: rgba(134, 76, 44, 0.28);
+}
+.basin .field > span {
+  color: #1e3653;
+}
+.basin .field input,
+.basin .field textarea {
+  color: #0b1f38;
+  background: #ffffff;
+  border-color: rgba(30, 54, 83, 0.28);
+}
+.basin .field input::placeholder,
+.basin .field textarea::placeholder {
+  color: rgba(30, 54, 83, 0.42);
+}
+.basin .field input:focus,
+.basin .field textarea:focus {
+  border-color: var(--bronze-5);
+  background: #fff;
+}
+.basin .chip {
+  color: #1e3653;
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(30, 54, 83, 0.28);
+}
+.basin .chip:hover {
+  border-color: var(--bronze-5);
+  color: #0b1f38;
+}
+.basin .chip.is-on {
+  background: #1e3653;
+  color: #fbf4e8;
+  border-color: #1e3653;
+}
+.basin .btn-ghost {
+  color: #1e3653;
+  border-color: rgba(30, 54, 83, 0.4);
+}
+.basin .btn-ghost:hover {
+  border-color: var(--bronze-5);
+  color: var(--bronze-6);
+}
+.basin-fineprint {
+  color: rgba(30, 54, 83, 0.7);
+}
+
 /* =====================================================================
    Footer
    ===================================================================== */
@@ -1175,6 +1288,9 @@ body:not(.is-loading) .load-fade {
     background 0.3s var(--ease),
     backdrop-filter 0.3s var(--ease);
 }
+.modal[hidden] {
+  display: none;
+} /* critical: otherwise this overlay eats every click */
 .modal--open {
   background: rgba(3, 10, 20, 0.74);
   backdrop-filter: blur(6px);
@@ -1279,6 +1395,7 @@ body:not(.is-loading) .load-fade {
 
 @media (max-width: 860px) {
   .grow-grid,
+  .svc-grid,
   .work-grid,
   .field-row {
     grid-template-columns: 1fr;
