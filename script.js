@@ -392,8 +392,12 @@ function setScene(p) {
    read, then scales up + lifts + blurs + fades as it passes the camera. */
 function setupActCameras() {
   document.querySelectorAll(".act").forEach((act) => {
+<<<<<<< HEAD
     const stage =
       act.querySelector(".stage-content") || act.querySelector(".stage");
+=======
+    const stage = act.querySelector(".stage-content") || act.querySelector(".stage");
+>>>>>>> 6ef682f564b2fce03226ba02123a3bc4efa9d329
     if (!stage) return;
     const cam = act.dataset.cam || "hold";
     const fly = cam === "fly" || cam === "hero";
