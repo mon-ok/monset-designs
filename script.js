@@ -17,134 +17,90 @@ const svg = (p) =>
    ===================================================================== */
 const FRICTION = [
   {
-    t: "Manual, inefficient logs",
-    d: "Notebooks and chat threads instead of a source of truth.",
-    i: svg(
-      '<path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M8 11h6M8 15h4"/>',
-    ),
-  },
-  {
-    t: "Lacking data",
-    d: "Decisions made on gut feel because the numbers aren't there.",
-    i: svg('<path d="M3 3v18h18"/><path d="M7 15l3-3 3 2 4-5"/>'),
-  },
-  {
-    t: "Inventory problems",
-    d: "Stock-outs, over-orders, and mystery shrinkage nobody catches.",
-    i: svg(
-      '<path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>',
-    ),
-  },
-  {
-    t: "Administration backlogs",
-    d: "Paperwork and follow-ups piling up behind day-to-day fires.",
-    i: svg(
-      '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/>',
-    ),
-  },
-  {
-    t: "Report delays & accuracy",
-    d: "By the time the report lands, the moment to act has passed.",
-    i: svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
-  },
-  {
-    t: "Blind business tracking",
-    d: "No live view of profit, gross, or where the money actually goes.",
-    i: svg(
-      '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
-    ),
-  },
-  {
-    t: "Disconnected tools",
-    d: "Five apps that don't talk, so the same data gets keyed in twice.",
+    t: "Scattered tools that don't talk to each other",
     i: svg(
       '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4a2 2 0 0 1 2 2V14M6.5 10v4a2 2 0 0 0 2 2H14"/>',
     ),
   },
   {
-    t: "Missed customer follow-up",
-    d: "Leads and repeat guests slip through an inbox nobody owns.",
+    t: "Decisions made on gut feel, not real numbers",
+    i: svg('<path d="M3 3v18h18"/><path d="M7 15l3-3 3 2 4-5"/>'),
+  },
+  {
+    t: "Leads and messages that slip through the cracks",
     i: svg(
       '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/>',
     ),
   },
   {
-    t: "Revenue leaks",
-    d: "Small unbilled extras and discounts that quietly add up.",
+    t: "Hours lost to manual admin every week",
+    i: svg(
+      '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/>',
+    ),
+  },
+  {
+    t: "No live view of profit or cash flow",
+    i: svg(
+      '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
+    ),
+  },
+  {
+    t: "Small billing mistakes that quietly cost you",
     i: svg(
       '<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
     ),
   },
-  {
-    t: "Double-bookings & clashes",
-    d: "Two guests, one room — scheduling errors you find out about late.",
-    i: svg(
-      '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/>',
-    ),
-  },
 ];
 
-const PILLARS = [
+/* Growth section — a straight before/after contrast, not a duplicate feature
+   list (Services below already covers the concrete deliverables). */
+const COMPARISON = [
   {
-    t: "Website",
-    d: "Get seen. A fast, modern site pulls in attention and turns quiet interest into real enquiries.",
-    i: svg(
-      '<rect x="2" y="4" width="20" height="14" rx="2"/><path d="M2 9h20M6 18v2M18 18v2M8 20h8"/>',
-    ),
-    stats: [
-      "<b>75%</b> judge credibility on design*",
-      "<b>2×</b> more reach than social alone*",
-    ],
+    without: "Invisible online, or stuck with an outdated site",
+    withUs: "A modern site that turns visitors into real enquiries",
   },
   {
-    t: "Admin dashboard",
-    d: "See profit, gross, and expenses the moment they happen — and decide your next move with real ground under you.",
-    i: svg(
-      '<path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/>',
-    ),
+    without: "Checking three spreadsheets to know if you're making money",
+    withUs: "Profit and cash flow visible the moment they happen",
   },
   {
-    t: "Data analysis & synthesis",
-    d: "We turn your numbers into a read on how the business is doing — and surface the growth hiding inside them.",
-    i: svg(
-      '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M8 11l2 2 3-4"/>',
-    ),
+    without: "Decisions made on gut feel",
+    withUs: "Clear answers about what's actually working",
   },
   {
-    t: "CRM",
-    d: "One seamless thread for every customer, from first hello to repeat booking. Nothing slips.",
-    i: svg(
-      '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 7.5a3 3 0 0 1 0 5M18 20a6 6 0 0 0-3-5.2"/>',
-    ),
+    without: "Leads and messages slipping through the cracks",
+    withUs: "Every customer followed up, automatically",
   },
 ];
+const compareXIcon = svg('<path d="M6 6l12 12M18 6L6 18"/>');
+const compareCheckIcon = svg('<path d="M5 12l5 5L19 7"/>');
 
 /* What we do — the concrete services (the "kit") */
 const SERVICES = [
   {
     t: "Websites & platforms",
-    d: "Fast marketing sites, plus full CRM, POS and dashboard platforms built on your real data.",
+    d: "Marketing sites, plus full CRM, POS, and dashboard platforms, all built around your real data.",
     i: svg(
       '<rect x="2" y="4" width="20" height="14" rx="2"/><path d="M2 9h20M8 20h8M12 18v2"/>',
     ),
   },
   {
     t: "AI digital receptionist",
-    d: "An always-on assistant that answers, books, and follows up across chat and Messenger.",
+    d: "Answers, books, and follows up around the clock, so a lead at 11pm gets a reply in seconds, not the next morning.",
     i: svg(
       '<path d="M12 3a7 7 0 0 0-7 7v4a3 3 0 0 0 3 3M12 3a7 7 0 0 1 7 7v4a3 3 0 0 1-3 3h-3"/><path d="M4 14v-2a2 2 0 0 1 2-2M20 14v-2a2 2 0 0 0-2-2"/>',
     ),
   },
   {
     t: "Workflow automation",
-    d: "We wire your tools together with n8n and AI so the repetitive busywork runs itself.",
+    d: "We connect your tools with automation, so work that used to take 4 hours can run in under 2 minutes.",
     i: svg(
       '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
     ),
   },
   {
     t: "Digital marketing",
-    d: "Get found and fill the pipeline — search, social, and campaigns built to convert.",
+    d: "Show up first when people search for your service nearby, on Google and in AI answers, not buried on page two.",
     i: svg(
       '<path d="M3 11l16-6v14L3 13v-2z"/><path d="M7 12v5a2 2 0 0 0 4 0"/><path d="M19 8a3 3 0 0 1 0 6"/>',
     ),
@@ -156,7 +112,7 @@ const PROJECTS = [
     name: "Hunahuna Beach Resort",
     tag: "React + Vite + Supabase",
     description:
-      "Resort marketing site and booking platform on a real Supabase backend — rooms, menu, gallery. Live booking writes are intentionally disabled.",
+      "Resort marketing site and booking platform on a real Supabase backend: rooms, menu, gallery. Live booking writes are intentionally disabled.",
     thumb: "assets/hunahuna.png",
     live: "https://hunahuna-site.vercel.app/",
   },
@@ -180,7 +136,7 @@ const PROJECTS = [
     name: "Agency Template",
     tag: "Static HTML / CSS / JS",
     description:
-      "Editorial agency template — layered hero where a photo overlaps a giant headline, heavy scroll animation throughout.",
+      "Editorial agency template with a layered hero where a photo overlaps a giant headline, heavy scroll animation throughout.",
     thumb: "assets/agency.png",
     live: "https://showcase-agency.vercel.app/",
   },
@@ -258,7 +214,7 @@ document.getElementById("friction-grid").innerHTML = FRICTION.map(
   (f) => `
   <li class="friction-item">
     <span class="friction-icon">${f.i}</span>
-    <div class="friction-text"><h3>${f.t}</h3><p>${f.d}</p></div>
+    <p class="friction-text">${f.t}</p>
   </li>`,
 ).join("");
 
@@ -271,16 +227,20 @@ document.getElementById("svc-grid").innerHTML = SERVICES.map(
   </article>`,
 ).join("");
 
-document.getElementById("grow-grid").innerHTML = PILLARS.map(
-  (p, i) => `
-  <article class="grow-card" style="transition-delay:${i * 70}ms">
-    <p class="grow-num">Foothold ${i + 1}</p>
-    <span class="grow-icon">${p.i}</span>
-    <h3>${p.t}</h3>
-    <p>${p.d}</p>
-    ${p.stats ? `<div class="grow-stats">${p.stats.map((s) => `<span class="grow-stat">${s}</span>`).join("")}</div>` : ""}
-  </article>`,
-).join("");
+document.getElementById("compare").innerHTML =
+  `<p class="compare-label compare-label-without">Most businesses</p>` +
+  `<p class="compare-label compare-label-with">With Monset</p>` +
+  COMPARISON.map(
+    (c, i) => `
+  <div class="compare-item compare-without" style="transition-delay:${i * 70}ms">
+    <span class="compare-icon">${compareXIcon}</span>
+    <p>${c.without}</p>
+  </div>
+  <div class="compare-item compare-with" style="transition-delay:${i * 70}ms">
+    <span class="compare-icon">${compareCheckIcon}</span>
+    <p>${c.withUs}</p>
+  </div>`,
+  ).join("");
 
 const grid = document.getElementById("project-grid");
 PROJECTS.forEach((project, i) => {
@@ -288,7 +248,9 @@ PROJECTS.forEach((project, i) => {
   card.className = "card";
   card.style.transitionDelay = `${i * 80}ms`;
   card.innerHTML = `
-    <div class="thumb" style="background-image:url('${project.thumb}')"></div>
+    <div class="thumb" style="background-image:url('${project.thumb}')">
+      <span class="card-badge">Demo build</span>
+    </div>
     <div class="body">
       <p class="tag">${project.tag}</p>
       <h3>${project.name}</h3>
@@ -336,6 +298,7 @@ const band = (p, a, b) => clamp01((p - a) / (b - a)); // 0 before a, 1 after b
 
 const gid = (id) => document.getElementById(id);
 const el = {
+  scene: gid("scene"),
   blue: gid("sky-blue"),
   dusk: gid("sky-dusk"),
   gold: gid("sky-gold"),
@@ -344,44 +307,71 @@ const el = {
   sea: gid("cloud-sea"),
   field: gid("cloud-field"),
   far: gid("far-ridge"),
-  mid: gid("mid-slope"),
-  near: gid("near-slope"),
+  ground: gid("ground"),
+  groundTex: gid("ground-tex"),
+  wallL: gid("wall-left"),
+  wallR: gid("wall-right"),
   marker: gid("trail-marker"),
+  mobileFill: gid("mobile-progress-fill"),
 };
 
-// move a range down and slightly back as you rise above it
-function sink(elm, y, scale, opacity) {
-  if (!elm) return;
-  elm.style.transform = `translateY(${y.toFixed(1)}px) scale(${scale.toFixed(4)})`;
-  elm.style.opacity = opacity.toFixed(3);
-}
+const TAU = Math.PI * 2;
+const WALK_STEPS = 11; // footsteps across the whole climb — lower = slower cadence
 
 function setScene(p) {
   const vh = window.innerHeight;
+  if (el.mobileFill) el.mobileFill.style.width = `${(p * 100).toFixed(1)}%`;
 
-  // --- sky cross-fade: blue -> dusk -> gold ---
+  // --- FIRST-PERSON WALK: subtle footstep sway on the whole world, then a
+  //     pull-back (zoom out) at the very top to frame the peak. ---
+  const settle = 1 - band(p, 0.9, 1); // sway eases out as you arrive at the summit
+  const phase = p * WALK_STEPS * TAU;
+  const bobY = Math.sin(phase) * 5 * settle; // up-down (per step)
+  const swayX = Math.sin(phase * 0.5) * 7 * settle; // side-to-side (every other step)
+  const bobR = Math.sin(phase * 0.5) * 0.3 * settle; // slight roll
+  const pullBack = 1 - band(p, 0.88, 1) * 0.16; // camera steps back at the peak
+  if (el.scene)
+    el.scene.style.transform = `translate(${swayX.toFixed(2)}px, ${bobY.toFixed(2)}px) rotate(${bobR.toFixed(3)}deg) scale(${pullBack.toFixed(4)})`;
+
+  // --- sky cross-fade: blue -> dusk -> gold (altitude) ---
   el.blue.style.opacity = 1 - band(p, 0.42, 0.72);
   el.dusk.style.opacity = band(p, 0.22, 0.5) * (1 - 0.85 * band(p, 0.8, 1));
   el.gold.style.opacity = band(p, 0.66, 1);
 
-  // --- ranges SINK below you: you gain height and rise above them ---
-  // near = the base ground you start on, falls away first & fastest.
-  sink(el.near, p * vh * 1.35, 1, 1 - band(p, 0.18, 0.46));
-  sink(el.mid, p * vh * 0.95, lerp(1, 0.92, p), 1 - band(p, 0.32, 0.6));
-  sink(el.far, p * vh * 0.55, lerp(1, 0.86, p), 1 - band(p, 0.46, 0.74));
+  // --- the trail streams toward you as you walk; fades as you crest ---
+  if (el.groundTex)
+    el.groundTex.style.backgroundPosition = `0 0, 0 ${(p * 2600).toFixed(0)}px, 0 0`;
+  if (el.ground) el.ground.style.opacity = (1 - band(p, 0.8, 0.95)).toFixed(3);
 
-  // --- solitary peak: distant at the base, dollies toward you as you approach ---
+  // --- side walls slide past and open out as you gain height ---
+  const wallFade = 1 - band(p, 0.46, 0.72);
+  if (el.wallL) {
+    el.wallL.style.transform = `translate(${(-p * 20).toFixed(1)}vw, ${(p * 34).toFixed(1)}vh) scale(${(1 + p * 0.5).toFixed(3)})`;
+    el.wallL.style.opacity = wallFade.toFixed(3);
+  }
+  if (el.wallR) {
+    el.wallR.style.transform = `translate(${(p * 20).toFixed(1)}vw, ${(p * 34).toFixed(1)}vh) scale(${(1 + p * 0.5).toFixed(3)})`;
+    el.wallR.style.opacity = wallFade.toFixed(3);
+  }
+
+  // --- distant range at the horizon sinks a touch as you climb above it ---
+  if (el.far) {
+    el.far.style.transform = `translateY(${(p * vh * 0.4).toFixed(1)}px) scale(${lerp(1, 0.9, p).toFixed(3)})`;
+    el.far.style.opacity = (1 - band(p, 0.5, 0.78)).toFixed(3);
+  }
+
+  // --- solitary peak ahead: grows as you approach, camera eases at the top ---
   el.peak.style.opacity = band(p, 0.05, 0.3);
-  let pk = lerp(0.6, 1.5, band(p, 0.05, 0.86));
-  pk = lerp(pk, 1.42, band(p, 0.86, 1)); // camera eases at the summit
-  const pky = lerp(0.1, -0.05, band(p, 0.05, 0.95)); // rises toward your eye line
-  el.peak.style.transform = `translate(-50%, ${pky * vh}px) scale(${pk.toFixed(4)})`;
+  let pk = lerp(0.6, 1.45, band(p, 0.05, 0.86));
+  pk = lerp(pk, 1.35, band(p, 0.86, 1));
+  const pky = lerp(0.12, -0.04, band(p, 0.05, 0.95));
+  el.peak.style.transform = `translate(-50%, ${(pky * vh).toFixed(1)}px) scale(${pk.toFixed(4)})`;
 
-  // --- real puffy clouds: you rise UP into them mid-climb, then above them ---
+  // --- puffy clouds: you rise UP into them mid-climb, then above them ---
   const cf = band(p, 0.3, 0.5) * (1 - 0.55 * band(p, 0.72, 0.92));
   el.field.style.opacity = cf.toFixed(3);
-  const cfScale = lerp(0.85, 1.7, band(p, 0.3, 0.8)); // they swell as you enter them
-  const cfY = band(p, 0.3, 0.95) * vh * 0.55; // and drift down below you
+  const cfScale = lerp(0.85, 1.7, band(p, 0.3, 0.8));
+  const cfY = band(p, 0.3, 0.95) * vh * 0.55;
   el.field.style.transform = `translateY(${cfY.toFixed(1)}px) scale(${cfScale.toFixed(4)})`;
 
   // --- golden sun glow rises near the top ---
@@ -402,7 +392,8 @@ function setScene(p) {
    read, then scales up + lifts + blurs + fades as it passes the camera. */
 function setupActCameras() {
   document.querySelectorAll(".act").forEach((act) => {
-    const stage = act.querySelector(".stage");
+    const stage =
+      act.querySelector(".stage-content") || act.querySelector(".stage");
     if (!stage) return;
     const cam = act.dataset.cam || "hold";
     const fly = cam === "fly" || cam === "hero";
@@ -646,7 +637,7 @@ function openModal(project) {
   modalTitle.textContent = project.name;
   modalNewTab.href = project.live;
   modalHint.textContent =
-    "Live preview. If it doesn't load, the host may block embedding — open it in a new tab instead.";
+    "Live preview. If it doesn't load, the host may block embedding, so open it in a new tab instead.";
   modalFrame.src = project.live;
   modal.hidden = false;
   requestAnimationFrame(() =>
