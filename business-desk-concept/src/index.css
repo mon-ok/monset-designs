@@ -1,0 +1,184 @@
+:root {
+  /* Deep marine glass — chosen to sit with the cool blue office backdrop, not
+     the default warm-cream/near-black AI palette. */
+  --ink: #0b1a2b;
+  --ink-2: #0e2438;
+  --frost: rgba(230, 240, 252, 0.10);
+  --frost-line: rgba(200, 222, 250, 0.22);
+  --text: #eaf1fa;
+  --text-dim: #9db3cc;
+  --accent: #3d7bff;
+  --accent-soft: rgba(61, 123, 255, 0.16);
+
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: #06111d;
+  overflow-x: hidden;
+}
+body.locked { overflow: hidden; }
+
+/* Blurred generic office backdrop — sits behind the transparent 3D canvas. */
+.bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: url('/img/office-bg.png') center/cover no-repeat;
+  filter: blur(5px) saturate(1.05) brightness(0.92);
+  transform: scale(1.08); /* hide blur edge bleed */
+}
+.bg::after { /* legibility scrim + depth */
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(120% 90% at 50% 30%, rgba(6,17,29,0) 30%, rgba(6,17,29,0.55) 100%);
+}
+
+.canvas-fixed { position: fixed; inset: 0; z-index: 1; }
+
+/* Invisible spacer that gives the page its scroll length. */
+.scroll-length { position: relative; z-index: 2; pointer-events: none; }
+
+/* ---------------------------------------------------------------- Hero --- */
+.hero {
+  position: fixed; z-index: 3; inset: 0;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: flex-start; text-align: center;
+  padding-top: 12vh; pointer-events: none;
+}
+.hero-inner { max-width: 42rem; padding: 0 1.5rem; }
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600; letter-spacing: -0.03em; line-height: 0.98;
+  font-size: clamp(2.6rem, 7.5vw, 6rem);
+  margin: 0 0 1rem; text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(2, 10, 20, 0.45);
+}
+.hero p {
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  color: var(--text-dim); margin: 0 auto 2rem; max-width: 34rem;
+}
+.cta {
+  pointer-events: auto;
+  font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+  color: white; background: var(--accent);
+  border: none; border-radius: 999px; padding: 0.85rem 1.8rem;
+  cursor: pointer; transition: transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 30px rgba(61, 123, 255, 0.35);
+}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61, 123, 255, 0.5); }
+.cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.scroll-hint {
+  position: fixed; z-index: 3; left: 50%; bottom: 2.2rem;
+  transform: translateX(-50%);
+  color: var(--text-dim); font-size: 0.8rem; letter-spacing: 0.02em;
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  pointer-events: none;
+}
+.scroll-hint svg { animation: bob 1.8s ease-in-out infinite; }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+/* --------------------------------------------------------- Screen UI ----- */
+/* Rendered inside the 3D scene via <Html transform>, so sizes are in the div's
+   own px space (CONFIG.screen.htmlPx). */
+.screen {
+  width: 100%; height: 100%;
+  border-radius: 14px; overflow: hidden;
+  background: linear-gradient(160deg, rgba(10,26,43,0.92), rgba(8,20,34,0.96));
+  color: var(--text);
+  display: flex; flex-direction: column;
+  font-family: var(--font-body);
+  box-shadow: inset 0 0 0 1px rgba(140,180,230,0.14);
+  transition: opacity 0.4s ease;
+}
+.screen-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; font-size: 15px;
+  border-bottom: 1px solid rgba(140,180,230,0.10);
+}
+.screen-bar .brand { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
+.screen-bar .clock { color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.screen-body {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 26px; padding: 24px;
+}
+.screen-body .greeting { color: var(--text-dim); font-size: 16px; }
+.apps { display: flex; gap: 26px; }
+.app {
+  width: 128px; padding: 18px 12px; border-radius: 16px;
+  background: var(--frost); border: 1px solid var(--frost-line);
+  color: var(--text); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  transition: transform 0.16s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.app:hover { transform: translateY(-4px); background: rgba(61,123,255,0.14); border-color: rgba(61,123,255,0.5); }
+.app.active { background: var(--accent-soft); border-color: var(--accent); }
+.app .glyph {
+  width: 46px; height: 46px; border-radius: 12px;
+  display: grid; place-items: center;
+  background: rgba(61,123,255,0.14); color: #cfe0ff;
+}
+.app .glyph svg { width: 26px; height: 26px; }
+.app .label { font-size: 15px; font-weight: 500; }
+
+/* ------------------------------------------------------- Tech panel ------ */
+.panel {
+  width: 100%; height: 100%;
+  border-radius: 20px; padding: 34px 34px 30px;
+  background: linear-gradient(155deg, rgba(120,170,235,0.16), rgba(30,60,100,0.10));
+  border: 1px solid rgba(170,205,250,0.30);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow: 0 30px 80px rgba(3, 14, 30, 0.5), inset 0 0 0 1px rgba(255,255,255,0.06);
+  color: var(--text); display: flex; flex-direction: column;
+  animation: panel-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes panel-in {
+  from { opacity: 0; transform: translateX(24px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+.panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.panel-head .eyebrow { color: #a9c6ff; font-size: 15px; margin: 0 0 6px; }
+.panel h2 {
+  font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+  font-size: 40px; margin: 0;
+}
+.panel .close {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--frost); border: 1px solid var(--frost-line);
+  color: var(--text); cursor: pointer; font-size: 20px; line-height: 1;
+  display: grid; place-items: center; transition: background 0.2s ease;
+}
+.panel .close:hover { background: rgba(255,80,90,0.24); border-color: rgba(255,120,120,0.6); }
+.panel .lede { font-size: 20px; line-height: 1.4; margin: 22px 0 14px; }
+.panel .body { color: var(--text-dim); font-size: 16px; line-height: 1.65; margin: 0; }
+.panel .stats {
+  margin-top: auto; padding-top: 26px; display: grid;
+  grid-template-columns: repeat(3, 1fr); gap: 14px;
+  border-top: 1px solid rgba(170,205,250,0.18);
+}
+.panel .stat .k { color: var(--text-dim); font-size: 13px; }
+.panel .stat .v { font-family: var(--font-display); font-size: 26px; font-weight: 600; }
+
+/* ----------------------------------------------------------- Loader ------ */
+.loader {
+  position: fixed; inset: 0; z-index: 20; background: #06111d;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.2rem; transition: opacity 0.6s ease; color: var(--text);
+}
+.loader.hidden { opacity: 0; pointer-events: none; }
+.loader .ring {
+  width: 46px; height: 46px; border-radius: 50%;
+  border: 3px solid rgba(160,190,230,0.2); border-top-color: var(--accent);
+  animation: spin 0.9s linear infinite;
+}
+.loader .pct { font-family: var(--font-display); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint svg { animation: none; }
+  .loader .ring { animation-duration: 2s; }
+}
