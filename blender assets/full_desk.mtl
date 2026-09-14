@@ -1,0 +1,340 @@
+# Blender 5.2.1 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl BO_beosound_explore_material_GreyMist
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/BO_beosound_explore_material_BaseColor.jpg
+map_Ns C:/BO_beosound_explore_material_Roughness.jpg
+map_refl C:/BO_beosound_explore_material_Metallic.jpg
+map_Bump -bm 1.000000 C:/BO_beosound_explore_material_Normal.jpg
+
+newmtl Gray_Wood_Veneer
+Ns 422.499969
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump -s 2 2 2 -bm 0.500000 C:/c5_Gray_Wood_01_Normal.jpg
+
+newmtl Monitor_main_black_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Monitor_main_mat_BaseColor.jpg
+map_Ns C:/Monitor_main_mat_Roughness.jpg
+map_refl C:/Monitor_main_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/Monitor_main_mat_Normal.jpg
+
+newmtl Monitor_screen_mat
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Silver_metal
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/metal01a_diffuse.jpg
+map_Ks C:/metal01_specular.jpg
+map_Ns C:/metal01_roughness.jpg
+map_refl C:/metal01_metallic.jpg
+map_Bump -bm 1.000000 C:/metal01_normal_opengl.jpg
+
+newmtl Socket
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/socket.jpg
+
+newmtl Stationery_set_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd C:/Stationery_set_mat_BaseColor.jpg
+map_Ns C:/Stationery_set_mat_Roughness.jpg
+map_refl C:/Stationery_set_mat_Metallic.jpg
+map_d C:/Stationery_set_mat_Opacity.jpg
+map_Bump -bm 1.000000 C:/Stationery_set_mat_Normal.jpg
+
+newmtl Table-tone.004
+Ns 566.539490
+Ka 0.085044 0.085044 0.085044
+Kd 0.154965 0.154965 0.154965
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl YealinkCP700Material
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/YealinkCP700Material_BaseColor.jpg
+map_Ns C:/YealinkCP700Material_Roughness.jpg
+map_refl C:/YealinkCP700Material_Metallic.jpg
+map_Bump -bm 1.000000 C:/YealinkCP700Material_Normal.jpg
+
+newmtl YealinkT58Pro_Material
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/YealinkT58Pro_Material_BaseColor.jpg
+map_Ns C:/YealinkT58Pro_Material_Roughness.jpg
+map_refl C:/YealinkT58Pro_Material_Metallic.jpg
+map_Bump -bm 1.000000 C:/YealinkT58Pro_Material_Normal.jpg
+
+newmtl bottle_glass_set_glass_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/bottle_glass_water_set_mat_BaseColor.jpg
+map_Ns C:/bottle_glass_water_set_mat_Roughness.jpg
+map_refl C:/bottle_glass_water_set_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/bottle_glass_water_set_mat_Normal.jpg
+
+newmtl bottle_glass_set_other_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/bottle_glass_water_set_mat_BaseColor.jpg
+map_Ns C:/bottle_glass_water_set_mat_Roughness.jpg
+map_refl C:/bottle_glass_water_set_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/bottle_glass_water_set_mat_Normal.jpg
+
+newmtl bottle_glass_set_water_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.333000
+d 1.000000
+illum 2
+map_Kd C:/bottle_glass_water_set_mat_BaseColor.jpg
+map_Ns C:/bottle_glass_water_set_mat_Roughness.jpg
+map_refl C:/bottle_glass_water_set_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/bottle_glass_water_set_mat_Normal.jpg
+
+newmtl cable_mat
+Ns 542.453735
+Ka 1.000000 1.000000 1.000000
+Kd 0.010953 0.010953 0.010953
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl calculator_mat.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/calculator_mat_BaseColor.jpg
+map_Ns C:/calculator_mat_Roughness.jpg
+map_refl C:/calculator_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/calculator_mat_Normal.jpg
+
+newmtl civ
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/civ_BaseColor.jpg
+map_Ns C:/civ_Roughness.jpg
+map_refl C:/civ_Metallic.jpg
+map_Bump -bm 1.000000 C:/civ_Normal.jpg
+
+newmtl cofee_cup_mat.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/coffee_cup_mat_BaseColor.jpg
+map_Ns C:/coffee_cup_mat_Roughness.jpg
+map_Bump -bm 1.000000 C:/coffee_cup_mat_Normal.jpg
+
+newmtl folder_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/folder_mat_BaseColor.jpg
+map_Ns C:/folder_mat_Roughness.jpg
+map_refl C:/folder_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/folder_mat_Normal.jpg
+
+newmtl ikea_markus_mat.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd C:/ikea_markus_mat_BaseColor.jpg
+map_Ns C:/ikea_markus_mat_Roughness.jpg
+map_refl C:/ikea_markus_mat_Metallic.jpg
+map_d C:/ikea_markus_mat_Opacity.jpg
+map_Bump -bm 1.000000 C:/ikea_markus_mat_Normal.jpg
+
+newmtl keyboard_mat.004
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/keyboard_mat_BaseColor.jpg
+map_Ns C:/keyboard_mat_Roughness.jpg
+map_refl C:/keyboard_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/keyboard_mat_Normal.jpg
+
+newmtl mouse_mat.004
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Material_BaseColor.jpg
+map_Ns C:/Material_Roughness.jpg
+map_refl C:/Material_Metallic.jpg
+map_Bump -bm 1.000000 C:/Material_Normal.jpg
+
+newmtl notebook_mat_1
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/notebook_mat_1_BaseColor.jpg
+map_Ns C:/notebook_mat_1_Roughness.jpg
+map_refl C:/notebook_mat_1_Metallic.jpg
+map_Bump -bm 1.000000 C:/notebook_mat_1_Normal.jpg
+
+newmtl notebook_mat_2
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/notebook_mat_2_BaseColor.jpg
+map_Ns C:/notebook_mat_2_Roughness.jpg
+map_refl C:/notebook_mat_2_Metallic.jpg
+map_Bump -bm 1.000000 C:/notebook_mat_2_Normal.jpg
+
+newmtl notepad_mat.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/notepad_mat_BaseColor.jpg
+map_Ns C:/notepad_mat_Roughness.jpg
+map_refl C:/notepad_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/notepad_mat_Normal.jpg
+
+newmtl paperA4_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/paperA4_mat_BaseColor.jpg
+map_Ns C:/paperA4_mat_Roughness.jpg
+map_refl C:/paperA4_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/paperA4_mat_Normal.jpg
+
+newmtl paper_tray_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd C:/paper_tray_mat_BaseColor.jpg
+map_Ns C:/paper_tray_mat_Roughness.jpg
+map_refl C:/paper_tray_mat_Metallic.jpg
+map_d C:/paper_tray_mat_Opacity.jpg
+map_Bump -bm 1.000000 C:/paper_tray_mat_Normal.jpg
+
+newmtl pen_mat.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/pen_mat_BaseColor.jpg
+map_Ns C:/pen_mat_Roughness.jpg
+map_refl C:/pen_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/pen_mat_Normal.jpg
+
+newmtl stack_paper_mat
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/stack_paper_mat_BaseColor.jpg
+map_Ns C:/stack_paper_mat_Roughness.jpg
+map_refl C:/stack_paper_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/stack_paper_mat_Normal.jpg
+
+newmtl utopia_desk_mat.001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Utopia_desk_mat_BaseColor.jpg
+map_Ns C:/Utopia_desk_mat_Roughness.jpg
+map_refl C:/Utopia_desk_mat_Metallic.jpg
+map_Bump -bm 1.000000 C:/Utopia_desk_mat_Normal.jpg

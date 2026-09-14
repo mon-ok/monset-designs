@@ -586,7 +586,15 @@
     t.anisotropy = 4;
     return t;
   }
-  const _sside = new THREE.Vector3();
+  const _sside = new THREE.Vector3(),
+    _face = new THREE.Vector3(),
+    _wdir = new THREE.Vector3();
+  const postGeo = new THREE.CylinderGeometry(0.07, 0.09, 2.2, 6);
+  const postMat = new THREE.MeshStandardMaterial({
+    color: 0x5b3d24,
+    flatShading: true,
+    roughness: 1,
+  });
   STAGE_T.forEach((t, idx) => {
     const p = curve.getPointAt(t);
     const tan = curve.getTangentAt(t);
@@ -594,20 +602,22 @@
     tan.normalize();
     _sside.crossVectors(tan, _up).normalize();
     const sgn = idx % 2 === 0 ? 1 : -1,
-      off = PATH_W / 2 + 1.3;
+      off = PATH_W / 2 + 1.4;
     const sx = p.x + _sside.x * off * sgn,
       sz = p.z + _sside.z * off * sgn;
     const gy = terrainH(sx, sz);
-    const post = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.09, 0.12, 3.0, 6),
-      new THREE.MeshStandardMaterial({
-        color: 0x5b3d24,
-        flatShading: true,
-        roughness: 1,
-      }),
-    );
-    post.position.set(sx, gy + 1.5, sz);
-    scene.add(post);
+    // two legs at the board's edges (clear of the text)
+    _face.set(p.x - sx, 0, p.z - sz).normalize();
+    _wdir.crossVectors(_up, _face).normalize();
+    [-1, 1].forEach((s) => {
+      const post = new THREE.Mesh(postGeo, postMat);
+      post.position.set(
+        sx + _wdir.x * 0.8 * s,
+        gy + 1.1,
+        sz + _wdir.z * 0.8 * s,
+      );
+      scene.add(post);
+    });
     const sign = new THREE.Mesh(
       new THREE.PlaneGeometry(2.1, 0.98),
       new THREE.MeshStandardMaterial({
@@ -616,8 +626,8 @@
         side: THREE.DoubleSide,
       }),
     );
-    sign.position.set(sx, gy + 2.6, sz);
-    sign.lookAt(p.x, gy + 2.6, p.z);
+    sign.position.set(sx, gy + 2.55, sz);
+    sign.lookAt(p.x, gy + 2.55, p.z);
     scene.add(sign);
   });
 
