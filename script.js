@@ -6,6 +6,36 @@
    with a plain-rAF fallback if the CDN libs don't load.
    ===================================================================== */
 
+/* =====================================================================
+   Theme toggle — default is LIGHT; choice persists across visits.
+   ===================================================================== */
+(function () {
+  const root = document.documentElement;
+  let saved = null;
+  try {
+    saved = localStorage.getItem("monset-theme");
+  } catch (e) {}
+  if (saved === "dark") root.setAttribute("data-theme", "dark");
+
+  function wire() {
+    const btn = document.getElementById("theme-toggle");
+    if (!btn || btn.dataset.wired) return;
+    btn.dataset.wired = "1";
+    btn.addEventListener("click", () => {
+      const dark = root.getAttribute("data-theme") === "dark";
+      if (dark) root.removeAttribute("data-theme");
+      else root.setAttribute("data-theme", "dark");
+      try {
+        localStorage.setItem("monset-theme", dark ? "light" : "dark");
+      } catch (e) {}
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    });
+  }
+  if (document.readyState === "loading")
+    document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
+
 const CONTACT_EMAIL = "hello@monset.co"; // <-- replace with your real inbox
 
 const svg = (p) =>
@@ -15,98 +45,6 @@ const svg = (p) =>
 /* =====================================================================
    CONTENT DATA
    ===================================================================== */
-const FRICTION = [
-  {
-    t: "Scattered tools that don't talk to each other",
-    i: svg(
-      '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4a2 2 0 0 1 2 2V14M6.5 10v4a2 2 0 0 0 2 2H14"/>',
-    ),
-  },
-  {
-    t: "Decisions made on gut feel, not real numbers",
-    i: svg('<path d="M3 3v18h18"/><path d="M7 15l3-3 3 2 4-5"/>'),
-  },
-  {
-    t: "Leads and messages that slip through the cracks",
-    i: svg(
-      '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/>',
-    ),
-  },
-  {
-    t: "Hours lost to manual admin every week",
-    i: svg(
-      '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/>',
-    ),
-  },
-  {
-    t: "No live view of profit or cash flow",
-    i: svg(
-      '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
-    ),
-  },
-  {
-    t: "Small billing mistakes that quietly cost you",
-    i: svg(
-      '<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
-    ),
-  },
-];
-
-/* Growth section — a straight before/after contrast, not a duplicate feature
-   list (Services below already covers the concrete deliverables). */
-const COMPARISON = [
-  {
-    without: "Invisible online, or stuck with an outdated site",
-    withUs: "A modern site that turns visitors into real enquiries",
-  },
-  {
-    without: "Checking three spreadsheets to know if you're making money",
-    withUs: "Profit and cash flow visible the moment they happen",
-  },
-  {
-    without: "Decisions made on gut feel",
-    withUs: "Clear answers about what's actually working",
-  },
-  {
-    without: "Leads and messages slipping through the cracks",
-    withUs: "Every customer followed up, automatically",
-  },
-];
-const compareXIcon = svg('<path d="M6 6l12 12M18 6L6 18"/>');
-const compareCheckIcon = svg('<path d="M5 12l5 5L19 7"/>');
-
-/* What we do — the concrete services (the "kit") */
-const SERVICES = [
-  {
-    t: "Websites & platforms",
-    d: "Marketing sites, plus full CRM, POS, and dashboard platforms, all built around your real data.",
-    i: svg(
-      '<rect x="2" y="4" width="20" height="14" rx="2"/><path d="M2 9h20M8 20h8M12 18v2"/>',
-    ),
-  },
-  {
-    t: "AI digital receptionist",
-    d: "Answers, books, and follows up around the clock, so a lead at 11pm gets a reply in seconds, not the next morning.",
-    i: svg(
-      '<path d="M12 3a7 7 0 0 0-7 7v4a3 3 0 0 0 3 3M12 3a7 7 0 0 1 7 7v4a3 3 0 0 1-3 3h-3"/><path d="M4 14v-2a2 2 0 0 1 2-2M20 14v-2a2 2 0 0 0-2-2"/>',
-    ),
-  },
-  {
-    t: "Workflow automation",
-    d: "We connect your tools with automation, so work that used to take 4 hours can run in under 2 minutes.",
-    i: svg(
-      '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
-    ),
-  },
-  {
-    t: "Digital marketing",
-    d: "Show up first when people search for your service nearby, on Google and in AI answers, not buried on page two.",
-    i: svg(
-      '<path d="M3 11l16-6v14L3 13v-2z"/><path d="M7 12v5a2 2 0 0 0 4 0"/><path d="M19 8a3 3 0 0 1 0 6"/>',
-    ),
-  },
-];
-
 const PROJECTS = [
   {
     name: "Hunahuna Beach Resort",
@@ -210,38 +148,6 @@ const TOOLS = [
 /* =====================================================================
    RENDER
    ===================================================================== */
-document.getElementById("friction-grid").innerHTML = FRICTION.map(
-  (f) => `
-  <li class="friction-item">
-    <span class="friction-icon">${f.i}</span>
-    <p class="friction-text">${f.t}</p>
-  </li>`,
-).join("");
-
-document.getElementById("svc-grid").innerHTML = SERVICES.map(
-  (s) => `
-  <article class="svc-card">
-    <span class="svc-icon">${s.i}</span>
-    <h3>${s.t}</h3>
-    <p>${s.d}</p>
-  </article>`,
-).join("");
-
-document.getElementById("compare").innerHTML =
-  `<p class="compare-label compare-label-without">Most businesses</p>` +
-  `<p class="compare-label compare-label-with">With Monset</p>` +
-  COMPARISON.map(
-    (c, i) => `
-  <div class="compare-item compare-without" style="transition-delay:${i * 70}ms">
-    <span class="compare-icon">${compareXIcon}</span>
-    <p>${c.without}</p>
-  </div>
-  <div class="compare-item compare-with" style="transition-delay:${i * 70}ms">
-    <span class="compare-icon">${compareCheckIcon}</span>
-    <p>${c.withUs}</p>
-  </div>`,
-  ).join("");
-
 const grid = document.getElementById("project-grid");
 PROJECTS.forEach((project, i) => {
   const card = document.createElement("div");
@@ -258,6 +164,24 @@ PROJECTS.forEach((project, i) => {
       <p class="cta">Open live preview</p>
     </div>`;
   card.addEventListener("click", () => openModal(project));
+
+  // gentle flick toward centre on hover (below the nav so it can't overlap it)
+  card.addEventListener("mouseenter", () => {
+    const r = card.getBoundingClientRect();
+    const dx = window.innerWidth / 2 - (r.left + r.width / 2);
+    const dy = window.innerHeight / 2 - (r.top + r.height / 2);
+    card.style.zIndex = "30";
+    card.style.transform = `translate(${(dx * 0.4).toFixed(0)}px, ${(dy * 0.4).toFixed(0)}px) scale(1.2)`;
+    card.style.boxShadow = "0 30px 70px -34px rgba(24, 45, 66, 0.5)";
+  });
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "";
+    card.style.boxShadow = "";
+    window.setTimeout(() => {
+      card.style.zIndex = "";
+    }, 520);
+  });
+
   grid.appendChild(card);
 });
 
@@ -322,16 +246,9 @@ function setScene(p) {
   const vh = window.innerHeight;
   if (el.mobileFill) el.mobileFill.style.width = `${(p * 100).toFixed(1)}%`;
 
-  // --- FIRST-PERSON WALK: subtle footstep sway on the whole world, then a
-  //     pull-back (zoom out) at the very top to frame the peak. ---
-  const settle = 1 - band(p, 0.9, 1); // sway eases out as you arrive at the summit
-  const phase = p * WALK_STEPS * TAU;
-  const bobY = Math.sin(phase) * 5 * settle; // up-down (per step)
-  const swayX = Math.sin(phase * 0.5) * 7 * settle; // side-to-side (every other step)
-  const bobR = Math.sin(phase * 0.5) * 0.3 * settle; // slight roll
-  const pullBack = 1 - band(p, 0.88, 1) * 0.16; // camera steps back at the peak
-  if (el.scene)
-    el.scene.style.transform = `translate(${swayX.toFixed(2)}px, ${bobY.toFixed(2)}px) rotate(${bobR.toFixed(3)}deg) scale(${pullBack.toFixed(4)})`;
+  // --- calm backdrop: a very gentle ease at the summit, no footstep jitter ---
+  const pullBack = 1 - band(p, 0.85, 1) * 0.08;
+  if (el.scene) el.scene.style.transform = `scale(${pullBack.toFixed(4)})`;
 
   // --- sky cross-fade: blue -> dusk -> gold (altitude) ---
   el.blue.style.opacity = 1 - band(p, 0.42, 0.72);
@@ -388,37 +305,45 @@ function setScene(p) {
   if (el.marker) el.marker.style.top = `${(1 - p) * 100}%`;
 }
 
-/* per-section depth camera: content rises from the distance, holds still to
-   read, then scales up + lifts + blurs + fades as it passes the camera. */
-function setupActCameras() {
-  document.querySelectorAll(".act").forEach((act) => {
-    const stage =
-      act.querySelector(".stage-content") || act.querySelector(".stage");
-    if (!stage) return;
-    const cam = act.dataset.cam || "hold";
-    const fly = cam === "fly" || cam === "hero";
-    const exitScale = fly ? 1.55 : 1.18;
-    const blurMax = fly ? 10 : 4;
-    const noEnter = cam === "hero";
-    ScrollTrigger.create({
-      trigger: act,
-      start: noEnter ? "top top" : "top bottom",
-      end: "bottom top",
-      scrub: true,
-      onUpdate: (self) => {
-        const prog = self.progress;
-        const enter = noEnter ? 1 : band(prog, 0.02, 0.3);
-        const exit = band(prog, 0.64, 1.0);
-        const scale = exit > 0 ? lerp(1, exitScale, exit) : lerp(0.9, 1, enter);
-        const opacity = clamp01(enter) * clamp01(1 - exit);
-        const y = lerp(0, -window.innerHeight * 0.06, exit);
-        const blur = exit * blurMax;
-        stage.style.transform = `translateY(${y.toFixed(1)}px) scale(${scale.toFixed(4)})`;
-        stage.style.opacity = opacity.toFixed(3);
-        stage.style.filter = blur > 0.1 ? `blur(${blur.toFixed(1)}px)` : "none";
-      },
-    });
+/* momentum: while you scroll, the content boxes (columns, cards, CTAs) drag in
+   the scroll direction and glide back to rest when you stop. Word-groups
+   (headings) sit inside those boxes but counter-move slightly, so they end up
+   travelling ~30% less than their box — a layered lag. Velocity-driven, so it
+   only shows during actual movement. */
+function setupMomentum() {
+  const boxSel =
+    ".section-head, .solve-grid, .pkg-grid, .pkg-addons, .work-grid, .mid-cta, .basin-card";
+  const wordSel = ".section-title, .section-note, .solve-q, .pkg-name";
+  const boxes = [];
+  const words = [];
+  document.querySelectorAll(".act:not(.hero)").forEach((act) => {
+    act.querySelectorAll(boxSel).forEach((b) => boxes.push(b));
+    act.querySelectorAll(wordSel).forEach((w) => words.push(w));
   });
+  if (!boxes.length) return;
+
+  let applied = 0;
+  let lastY = window.scrollY;
+
+  function tick() {
+    let vel;
+    if (lenis && typeof lenis.velocity === "number") {
+      vel = lenis.velocity;
+    } else {
+      vel = window.scrollY - lastY;
+      lastY = window.scrollY;
+    }
+    // velocity -> pixel drag, clamped; positive scroll pushes content down (lag)
+    const target = Math.max(-180, Math.min(180, vel * 7));
+    applied += (target - applied) * 0.11; // ease toward target; decays to 0 = settle
+    if (Math.abs(applied) < 0.03 && Math.abs(target) < 0.03) applied = 0;
+    const boxT = `translateY(${applied.toFixed(2)}px)`; // boxes move the full amount
+    const wordT = `translateY(${(applied * -0.3).toFixed(2)}px)`; // headings lag 30%
+    for (let i = 0; i < boxes.length; i++) boxes[i].style.transform = boxT;
+    for (let i = 0; i < words.length; i++) words[i].style.transform = wordT;
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 }
 
 /* =====================================================================
@@ -453,7 +378,7 @@ if (!reduce) {
       scrub: true,
       onUpdate: (self) => setScene(self.progress),
     });
-    setupActCameras();
+    setupMomentum();
     ScrollTrigger.refresh();
   } else {
     let ticking = false;
@@ -471,6 +396,7 @@ if (!reduce) {
       },
       { passive: true },
     );
+    setupMomentum();
   }
   setScene(pageProgress());
 }
@@ -504,8 +430,8 @@ document.addEventListener("click", (e) => {
 
 /* active trail dot by section in view */
 const trailDots = [...document.querySelectorAll(".trail-dot")];
-const sections = ["top", "friction", "grow", "services", "work", "basin"].map(
-  (id) => document.getElementById(id),
+const sections = ["top", "friction", "packages", "work", "basin"].map((id) =>
+  document.getElementById(id),
 );
 const sectionObserver = new IntersectionObserver(
   (entries) =>
@@ -526,12 +452,19 @@ const nav = document.getElementById("nav");
 const navToggle = document.getElementById("nav-toggle");
 const heroEl = document.getElementById("top");
 let navTick = false;
+let lastNavY = window.scrollY;
 function updateNav() {
-  const past = window.scrollY > heroEl.offsetHeight - 90;
+  const y = window.scrollY;
+  const past = y > heroEl.offsetHeight - 90;
   nav.classList.toggle(
     "nav--scrolled",
     past || nav.classList.contains("menu-open"),
   );
+  // fade out on scroll down (past the hero), bring back on scroll up
+  const goingDown = y > lastNavY;
+  const hide = goingDown && y > 140 && !nav.classList.contains("menu-open");
+  nav.classList.toggle("nav--hidden", hide);
+  lastNavY = y;
   navTick = false;
 }
 window.addEventListener(
