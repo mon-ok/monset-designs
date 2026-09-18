@@ -797,98 +797,28 @@
         <div class="stage">
           <div class="wrap basin-inner">
             <header class="section-head basin-head">
-              <h2 class="section-title">Let&rsquo;s build your plan</h2>
+              <h2 class="section-title">Let's build your plan</h2>
+
               <p class="section-note">
-                Tell us where you&rsquo;re at and where you want to go.
-                We&rsquo;ll put a plan together. No pressure.
+                Tell us where you're at and where you want to go. We'll put a
+                plan together. No pressure.
               </p>
             </header>
 
-            <div class="basin-card">
-              <div class="field-row">
-                <label class="field">
-                  <span>Business name</span>
-                  <input
-                    type="text"
-                    id="f-business"
-                    placeholder="e.g. Huna-Huna Cliff Resort"
-                    autocomplete="organization"
-                  />
-                </label>
-                <label class="field">
-                  <span>Email</span>
-                  <input
-                    type="email"
-                    id="f-email"
-                    placeholder="you@business.com"
-                    autocomplete="email"
-                  />
-                </label>
-              </div>
+            <div class="basin-card calendly-card">
+              <!-- Calendly inline widget begin -->
+              <div
+                class="calendly-inline-widget"
+                data-url="https://calendly.com/bernard-monsetco"
+                style="min-width: 320px; height: 700px"
+              ></div>
 
-              <div class="field">
-                <span>What do you need?</span>
-                <div
-                  class="chips"
-                  id="need-chips"
-                  role="group"
-                  aria-label="What do you need"
-                >
-                  <button type="button" class="chip" data-need="Website">
-                    Website
-                  </button>
-                  <button
-                    type="button"
-                    class="chip"
-                    data-need="Admin dashboard"
-                  >
-                    Admin dashboard
-                  </button>
-                  <button type="button" class="chip" data-need="Data analysis">
-                    Data analysis
-                  </button>
-                  <button type="button" class="chip" data-need="CRM">
-                    CRM
-                  </button>
-                  <button type="button" class="chip" data-need="Not sure yet">
-                    Not sure yet
-                  </button>
-                </div>
-              </div>
-
-              <label class="field">
-                <span>Anything you want to ask or explain?</span>
-                <textarea
-                  id="f-message"
-                  rows="4"
-                  placeholder="A little about where you're stuck, or a question for us."
-                ></textarea>
-              </label>
-
-              <div class="basin-actions">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-lg"
-                  id="send-brief"
-                >
-                  Send our team the details
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-ghost btn-lg"
-                  id="ask-question"
-                >
-                  Ask us a question
-                </button>
-              </div>
-              <p class="basin-fineprint" id="form-note">
-                Opens your email with everything filled in, so you stay in
-                control of what&rsquo;s sent.
-              </p>
-              <p class="basin-fineprint basin-direct">
-                Mail app not playing along? Email us directly at
-                <a href="mailto:hello@monset.co">hello@monset.co</a>.
-              </p>
+              <script
+                type="text/javascript"
+                src="https://assets.calendly.com/assets/external/widget.js"
+                async
+              ></script>
+              <!-- Calendly inline widget end -->
             </div>
           </div>
         </div>

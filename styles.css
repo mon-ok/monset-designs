@@ -889,6 +889,21 @@ h3 {
   justify-content: center;
 }
 
+/* =====================================================================
+   Calendly
+   ===================================================================== */
+
+.calendly-card {
+  width: 100%;
+  overflow: hidden;
+}
+
+.calendly-inline-widget {
+  width: 100%;
+  min-width: 320px;
+  height: 700px;
+}
+
 /* --- Packages (the full menu) --- */
 .pkg-grid {
   display: grid;
