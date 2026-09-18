@@ -708,8 +708,8 @@ h3 {
   margin-inline: auto;
 }
 .hero-headline {
-  font-size: clamp(3rem, 6.5vw, 7rem);
-  font-weight: 750;
+  font-size: clamp(3rem, 5.5vw, 7rem);
+  font-weight: 700;
   line-height: 1;
   letter-spacing: normal;
   padding-bottom: 0.08em;
