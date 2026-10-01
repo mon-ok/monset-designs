@@ -490,7 +490,7 @@ navToggle.addEventListener("click", () => {
    Loader
    ===================================================================== */
 const loader = document.getElementById("loader");
-const MIN_LOADER_MS = 650;
+const MIN_LOADER_MS = 1300; // dwell on the glow sweep, then compress out
 const loaderStart = performance.now();
 function hideLoader() {
   const wait = Math.max(0, MIN_LOADER_MS - (performance.now() - loaderStart));
@@ -498,7 +498,7 @@ function hideLoader() {
     loader.classList.add("loader--done");
     document.body.classList.remove("is-loading");
     document.getElementById("hero-headline").classList.add("is-visible");
-    setTimeout(() => loader.remove(), 550);
+    setTimeout(() => loader.remove(), 1000); // after the compress-out transition
     if (hasGSAP) ScrollTrigger.refresh(); // recalc after layout settles
   }, wait);
 }
@@ -506,54 +506,10 @@ if (document.readyState === "complete") hideLoader();
 else window.addEventListener("load", hideLoader);
 
 /* =====================================================================
-   Basin funnel — chips + mailto (zero backend). Swap sendBrief() later
-   for an n8n webhook POST or a Supabase insert.
+   Contact is a Calendly inline widget now (see #basin in the HTML), so the
+   old mailto-form handlers were removed — they referenced elements that no
+   longer exist and were throwing before the rest of this file could run.
    ===================================================================== */
-const selectedNeeds = new Set();
-document.querySelectorAll("#need-chips .chip").forEach((chip) => {
-  chip.addEventListener("click", () => {
-    const need = chip.dataset.need;
-    if (selectedNeeds.has(need)) {
-      selectedNeeds.delete(need);
-      chip.classList.remove("is-on");
-    } else {
-      selectedNeeds.add(need);
-      chip.classList.add("is-on");
-    }
-  });
-});
-const formNote = document.getElementById("form-note");
-const flash = (m) => {
-  if (formNote) formNote.textContent = m;
-};
-const val = (id) => (document.getElementById(id).value || "").trim();
-
-document.getElementById("send-brief").addEventListener("click", () => {
-  const business = val("f-business"),
-    email = val("f-email"),
-    message = val("f-message");
-  const needs = [...selectedNeeds];
-  if (!business && !email && !message && needs.length === 0) {
-    flash(
-      "Add a couple of details first, then we'll open your email ready to send.",
-    );
-    return;
-  }
-  const subject = `New enquiry${business ? ` — ${business}` : ""}`;
-  const body =
-    `Business: ${business || "—"}\n` +
-    `Email: ${email || "—"}\n` +
-    `Interested in: ${needs.length ? needs.join(", ") : "—"}\n\n${message || ""}`;
-  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  flash("Opening your email with everything filled in…");
-});
-document.getElementById("ask-question").addEventListener("click", () => {
-  const email = val("f-email"),
-    business = val("f-business");
-  const subject = `Quick question${business ? ` — ${business}` : ""}`;
-  const body = email ? `(Reply to: ${email})\n\n` : "";
-  window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-});
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
