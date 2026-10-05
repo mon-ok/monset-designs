@@ -149,39 +149,30 @@ const TOOLS = [
    RENDER
    ===================================================================== */
 const grid = document.getElementById("project-grid");
-PROJECTS.forEach((project, i) => {
-  const card = document.createElement("div");
+PROJECTS.forEach((project) => {
+  // a real link: keyboard, middle-click and "open in new tab" all still work;
+  // a plain click opens the in-page preview instead
+  const card = document.createElement("a");
   card.className = "card";
-  card.style.transitionDelay = `${i * 80}ms`;
+  card.href = project.live;
+  card.target = "_blank";
+  card.rel = "noopener";
   card.innerHTML = `
-    <div class="thumb" style="background-image:url('${project.thumb}')">
+    <div class="thumb">
+      <img src="${project.thumb}" alt="${project.name} homepage" loading="lazy" width="1280" height="800" />
       <span class="card-badge">Demo build</span>
     </div>
     <div class="body">
       <p class="tag">${project.tag}</p>
       <h3>${project.name}</h3>
       <p>${project.description}</p>
-      <p class="cta">Open live preview</p>
+      <p class="cta">Open live preview${svg('<path d="M7 17 17 7M8 7h9v9"/>')}</p>
     </div>`;
-  card.addEventListener("click", () => openModal(project));
-
-  // gentle flick toward centre on hover (below the nav so it can't overlap it)
-  card.addEventListener("mouseenter", () => {
-    const r = card.getBoundingClientRect();
-    const dx = window.innerWidth / 2 - (r.left + r.width / 2);
-    const dy = window.innerHeight / 2 - (r.top + r.height / 2);
-    card.style.zIndex = "30";
-    card.style.transform = `translate(${(dx * 0.4).toFixed(0)}px, ${(dy * 0.4).toFixed(0)}px) scale(1.2)`;
-    card.style.boxShadow = "0 30px 70px -34px rgba(24, 45, 66, 0.5)";
+  card.addEventListener("click", (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    openModal(project);
   });
-  card.addEventListener("mouseleave", () => {
-    card.style.transform = "";
-    card.style.boxShadow = "";
-    window.setTimeout(() => {
-      card.style.zIndex = "";
-    }, 520);
-  });
-
   grid.appendChild(card);
 });
 
@@ -196,21 +187,66 @@ document.getElementById("marquee-track").innerHTML =
   marqueeItemsHtml + marqueeItemsHtml;
 
 /* =====================================================================
-   Scroll reveal
+   Reveals
+   - section titles: words rise out of a mask
+   - cards / steps: arrive as a list with a short stagger
    ===================================================================== */
+document.querySelectorAll(".section-title").forEach((title) => {
+  const words = title.textContent.trim().split(/\s+/);
+  title.setAttribute("aria-label", words.join(" "));
+  title.innerHTML = words
+    .map(
+      (w, i) =>
+        `<span class="tw" aria-hidden="true"><span style="--i:${i}">${w}</span></span>`,
+    )
+    .join(" ");
+});
+
+const revealGroups = [
+  ".solve-grid > .solve-col",
+  ".route-steps > .route-step",
+  ".pkg-grid > .pkg-card",
+  ".work-grid > .card",
+  ".faq-list",
+  ".basin-card",
+];
+revealGroups.forEach((sel) =>
+  document.querySelectorAll(sel).forEach((node, i) => {
+    node.setAttribute("data-reveal", "");
+    node.style.setProperty("--rd", i);
+  }),
+);
+
 const revealObserver = new IntersectionObserver(
   (entries) =>
     entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add("is-visible");
-        revealObserver.unobserve(e.target);
-      }
+      if (!e.isIntersecting) return;
+      e.target.classList.add(
+        e.target.hasAttribute("data-reveal") ? "is-in" : "is-visible",
+      );
+      revealObserver.unobserve(e.target);
     }),
-  { threshold: 0.14, rootMargin: "0px 0px -60px 0px" },
+  { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
 );
 document
-  .querySelectorAll("[data-animate]")
-  .forEach((el) => revealObserver.observe(el));
+  .querySelectorAll(".section-head, [data-reveal]")
+  .forEach((node) => revealObserver.observe(node));
+
+/* hero headline: index each word for the post-loader stagger */
+document
+  .querySelectorAll("#hero-headline .w")
+  .forEach((w, i) => w.style.setProperty("--i", i));
+
+/* package cards: spotlight follows the cursor (fine pointers only) */
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  document.querySelectorAll(".pkg-card").forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      card.style.setProperty("--my", `${e.clientY - r.top}px`);
+    });
+  });
+}
 
 /* =====================================================================
    THE CLIMB — setScene(progress). Tune the ascent by editing the
@@ -222,7 +258,6 @@ const band = (p, a, b) => clamp01((p - a) / (b - a)); // 0 before a, 1 after b
 
 const gid = (id) => document.getElementById(id);
 const el = {
-  scene: gid("scene"),
   blue: gid("sky-blue"),
   dusk: gid("sky-dusk"),
   gold: gid("sky-gold"),
@@ -231,45 +266,18 @@ const el = {
   sea: gid("cloud-sea"),
   field: gid("cloud-field"),
   far: gid("far-ridge"),
-  ground: gid("ground"),
-  groundTex: gid("ground-tex"),
-  wallL: gid("wall-left"),
-  wallR: gid("wall-right"),
   marker: gid("trail-marker"),
   mobileFill: gid("mobile-progress-fill"),
 };
 
-const TAU = Math.PI * 2;
-const WALK_STEPS = 11; // footsteps across the whole climb — lower = slower cadence
-
 function setScene(p) {
   const vh = window.innerHeight;
-  if (el.mobileFill) el.mobileFill.style.width = `${(p * 100).toFixed(1)}%`;
-
-  // --- calm backdrop: a very gentle ease at the summit, no footstep jitter ---
-  const pullBack = 1 - band(p, 0.85, 1) * 0.08;
-  if (el.scene) el.scene.style.transform = `scale(${pullBack.toFixed(4)})`;
+  if (el.mobileFill) el.mobileFill.style.transform = `scaleX(${p.toFixed(4)})`;
 
   // --- sky cross-fade: blue -> dusk -> gold (altitude) ---
   el.blue.style.opacity = 1 - band(p, 0.42, 0.72);
   el.dusk.style.opacity = band(p, 0.22, 0.5) * (1 - 0.85 * band(p, 0.8, 1));
   el.gold.style.opacity = band(p, 0.66, 1);
-
-  // --- the trail streams toward you as you walk; fades as you crest ---
-  if (el.groundTex)
-    el.groundTex.style.backgroundPosition = `0 0, 0 ${(p * 2600).toFixed(0)}px, 0 0`;
-  if (el.ground) el.ground.style.opacity = (1 - band(p, 0.8, 0.95)).toFixed(3);
-
-  // --- side walls slide past and open out as you gain height ---
-  const wallFade = 1 - band(p, 0.46, 0.72);
-  if (el.wallL) {
-    el.wallL.style.transform = `translate(${(-p * 20).toFixed(1)}vw, ${(p * 34).toFixed(1)}vh) scale(${(1 + p * 0.5).toFixed(3)})`;
-    el.wallL.style.opacity = wallFade.toFixed(3);
-  }
-  if (el.wallR) {
-    el.wallR.style.transform = `translate(${(p * 20).toFixed(1)}vw, ${(p * 34).toFixed(1)}vh) scale(${(1 + p * 0.5).toFixed(3)})`;
-    el.wallR.style.opacity = wallFade.toFixed(3);
-  }
 
   // --- distant range at the horizon sinks a touch as you climb above it ---
   if (el.far) {
@@ -305,6 +313,50 @@ function setScene(p) {
   if (el.marker) el.marker.style.top = `${(1 - p) * 100}%`;
 }
 
+/* the route up: the path draws itself between the first and last step as the
+   section crosses the viewport, and each waypoint lights as the line reaches it */
+const routeSteps = gid("route-steps");
+const routeLive = gid("route-live");
+const routeBase = gid("route-base");
+const routeItems = routeSteps ? [...routeSteps.children] : [];
+let routeLen = 0;
+function layoutRoute() {
+  if (!routeLive) return;
+  // offset* ignore transforms, so the reveal/momentum motion can't skew this
+  const ox = routeSteps.offsetLeft;
+  const oy = routeSteps.offsetTop;
+  const pts = routeItems
+    .map((li) => {
+      // the node sits centred at the top of the step's content box
+      const n = li.querySelector(".route-node");
+      const cs = getComputedStyle(n);
+      const x = ox + li.offsetLeft + li.offsetWidth / 2;
+      const y =
+        oy +
+        li.offsetTop +
+        parseFloat(getComputedStyle(li).paddingTop) +
+        parseFloat(cs.marginTop) +
+        n.offsetHeight / 2;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(" ");
+  routeLive.setAttribute("points", pts);
+  routeBase.setAttribute("points", pts);
+  routeLen = routeLive.getTotalLength();
+  routeLive.style.strokeDasharray = `${routeLen} ${routeLen}`;
+}
+function updateRoute() {
+  if (!routeSteps) return;
+  const r = routeSteps.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const p = clamp01((vh * 0.85 - r.top) / (r.height + vh * 0.3));
+  if (routeLive) routeLive.style.strokeDashoffset = (routeLen * (1 - p)).toFixed(1);
+  routeSteps.style.setProperty("--route-off", (1 - p).toFixed(4));
+  routeItems.forEach((li, i) =>
+    li.classList.toggle("is-lit", p >= (i / 3) * 0.98),
+  );
+}
+
 /* momentum: while you scroll, the content boxes (columns, cards, CTAs) drag in
    the scroll direction and glide back to rest when you stop. Word-groups
    (headings) sit inside those boxes but counter-move slightly, so they end up
@@ -312,7 +364,7 @@ function setScene(p) {
    only shows during actual movement. */
 function setupMomentum() {
   const boxSel =
-    ".section-head, .solve-grid, .pkg-grid, .pkg-addons, .work-grid, .mid-cta, .basin-card";
+    ".section-head, .solve-grid, .route-wrap, .pkg-grid, .pkg-addons, .work-grid, .faq-list, .mid-cta";
   const wordSel = ".section-title, .section-note, .solve-q, .pkg-name";
   const boxes = [];
   const words = [];
@@ -334,7 +386,7 @@ function setupMomentum() {
       lastY = window.scrollY;
     }
     // velocity -> pixel drag, clamped; positive scroll pushes content down (lag)
-    const target = Math.max(-180, Math.min(180, vel * 7));
+    const target = Math.max(-90, Math.min(90, vel * 5));
     applied += (target - applied) * 0.11; // ease toward target; decays to 0 = settle
     if (Math.abs(applied) < 0.03 && Math.abs(target) < 0.03) applied = 0;
     const boxT = `translateY(${applied.toFixed(2)}px)`; // boxes move the full amount
@@ -360,6 +412,7 @@ function pageProgress() {
 let lenis = null;
 if (window.Lenis && !reduce) {
   lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.9, smoothWheel: true });
+  lenis.stop(); // held still under the loader; released when it breaks open
   const raf = (t) => {
     lenis.raf(t);
     requestAnimationFrame(raf);
@@ -399,6 +452,36 @@ if (!reduce) {
     setupMomentum();
   }
   setScene(pageProgress());
+
+  let routeTick = false;
+  const routeLoop = () => {
+    updateRoute();
+    routeTick = false;
+  };
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!routeTick) {
+        requestAnimationFrame(routeLoop);
+        routeTick = true;
+      }
+    },
+    { passive: true },
+  );
+  window.addEventListener("resize", () => {
+    layoutRoute();
+    updateRoute();
+  });
+  layoutRoute();
+  updateRoute();
+  // fonts change step heights, so re-measure once they land
+  if (document.fonts) document.fonts.ready.then(() => {
+    layoutRoute();
+    updateRoute();
+  });
+} else {
+  layoutRoute();
+  routeItems.forEach((li) => li.classList.add("is-lit"));
 }
 
 /* smooth-scroll anchor links (nav, trail, CTAs) — one delegated listener so it
@@ -490,18 +573,34 @@ navToggle.addEventListener("click", () => {
    Loader
    ===================================================================== */
 const loader = document.getElementById("loader");
-const MIN_LOADER_MS = 1300; // dwell on the glow sweep, then compress out
+// the light builds for BUILD_MS (matches --build in CSS), holds at full
+// intensity if the page is still loading, then climaxes and breaks open
+const BUILD_MS = 1900;
+const MAX_WAIT_MS = 4500; // never hold visitors hostage to a slow embed
 const loaderStart = performance.now();
+let loaderDone = false;
 function hideLoader() {
-  const wait = Math.max(0, MIN_LOADER_MS - (performance.now() - loaderStart));
+  if (loaderDone) return;
+  loaderDone = true;
+  const wait = reduce
+    ? 0
+    : Math.max(0, BUILD_MS - (performance.now() - loaderStart));
   setTimeout(() => {
     loader.classList.add("loader--done");
-    document.body.classList.remove("is-loading");
-    document.getElementById("hero-headline").classList.add("is-visible");
-    setTimeout(() => loader.remove(), 1000); // after the compress-out transition
-    if (hasGSAP) ScrollTrigger.refresh(); // recalc after layout settles
+    // release the hero as the flash peaks, so it is revealed by the light
+    setTimeout(
+      () => {
+        document.body.classList.remove("is-loading");
+        if (lenis) lenis.start();
+        document.getElementById("hero-headline").classList.add("is-visible");
+        if (hasGSAP) ScrollTrigger.refresh(); // recalc after layout settles
+      },
+      reduce ? 0 : 220,
+    );
+    setTimeout(() => loader.remove(), reduce ? 400 : 1300);
   }, wait);
 }
+setTimeout(hideLoader, MAX_WAIT_MS);
 if (document.readyState === "complete") hideLoader();
 else window.addEventListener("load", hideLoader);
 

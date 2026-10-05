@@ -8,12 +8,28 @@
       name="description"
       content="Monset builds the digital backbone for growing businesses: websites, admin dashboards, data analysis, and CRM. Climb from friction to your peak."
     />
+    <meta name="theme-color" content="#f4e8d3" />
+    <meta property="og:title" content="Monset — Is your business digitally competitive?" />
+    <meta
+      property="og:description"
+      content="Websites, CRM, automation and data for growing businesses. Built in Cebu, Philippines."
+    />
+    <meta property="og:image" content="logoblacktransparent.png" />
+    <link rel="icon" type="image/png" href="logoblacktransparent.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Mulish:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <script>
+      // before first paint: enable JS-only motion states, apply saved theme
+      document.documentElement.classList.add("js");
+      try {
+        if (localStorage.getItem("monset-theme") === "dark")
+          document.documentElement.setAttribute("data-theme", "dark");
+      } catch (e) {}
+    </script>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="is-loading">
@@ -28,19 +44,29 @@
       </style></noscript
     >
 
-    <!-- ============ Loader ============ -->
+    <a class="skip-link" href="#friction">Skip to content</a>
+
+    <!-- ============ Logo mark (traced from logoblacktransparent.png) ============ -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="monset-mark" viewBox="80 95 945 875">
+        <path class="mk-line" d="M298 380 637 955M587 107l426 853" />
+        <polygon class="mk-a" points="301,390 362,505 159,948 90,830" />
+        <polygon class="mk-b" points="565,122 625,230 432,627 368,505" />
+      </symbol>
+    </svg>
+
+    <!-- ============ Loader: light builds along the seam, then breaks open ============ -->
     <div class="loader" id="loader" aria-hidden="true">
       <div class="loader-top"></div>
       <div class="loader-bottom"></div>
-      <div class="loader-seam"></div>
+      <div class="loader-rays"></div>
+      <div class="loader-glow"></div>
+      <div class="loader-beam"></div>
       <div class="loader-brand">
-        <svg class="loader-mark" viewBox="0 0 64 48" aria-hidden="true">
-          <polygon class="lm-back" points="38,10 60,44 44,44" />
-          <polygon class="lm-navy" points="8,44 27,16 33,25 24,44" />
-          <polygon class="lm-slate" points="27,16 43,44 24,44 33,25" />
-        </svg>
+        <svg class="loader-mark"><use href="#monset-mark" /></svg>
         <span class="loader-word">Monset</span>
       </div>
+      <div class="loader-flash"></div>
     </div>
 
     <!-- ============ The climb scene (fixed camera, world moves) ============ -->
@@ -165,25 +191,6 @@
         </svg>
       </div>
 
-      <!-- mid range — sinks faster (you pass its height) -->
-      <!-- first-person side walls: the slopes you climb between; they slide past as you gain height -->
-      <div class="wall wall-left" id="wall-left">
-        <svg viewBox="0 0 600 1200" preserveAspectRatio="none">
-          <polygon
-            class="wall-fill"
-            points="0,1200 0,0 340,120 470,520 600,1200"
-          />
-        </svg>
-      </div>
-      <div class="wall wall-right" id="wall-right">
-        <svg viewBox="0 0 600 1200" preserveAspectRatio="none">
-          <polygon
-            class="wall-fill"
-            points="600,1200 600,0 260,120 130,520 0,1200"
-          />
-        </svg>
-      </div>
-
       <!-- puffy clouds that blow across on the wind; you rise up into them mid-climb -->
       <div class="cloud-field" id="cloud-field">
         <div
@@ -296,11 +303,6 @@
         </div>
       </div>
 
-      <!-- first-person ground: a perspective trail that streams toward you as you walk -->
-      <div class="ground" id="ground">
-        <div class="ground-tex" id="ground-tex"></div>
-      </div>
-
       <!-- puffy sea of clouds that swallows the bottom of the screen at the summit -->
       <div class="cloud-sea" id="cloud-sea">
         <div class="sea-fill"></div>
@@ -377,8 +379,6 @@
           </div>
         </div>
       </div>
-
-      <!-- sea of clouds that swallows the bottom of the screen at the summit -->
     </div>
 
     <!-- ============ Trail rail (climbs upward) ============ -->
@@ -392,6 +392,9 @@
       <!-- column-reverse in CSS puts base camp at the bottom, summit at the top -->
       <a href="#top" class="trail-dot" data-label="Home"><span></span></a>
       <a href="#friction" class="trail-dot" data-label="Challenges"
+        ><span></span
+      ></a>
+      <a href="#route" class="trail-dot" data-label="Process"
         ><span></span
       ></a>
       <a href="#packages" class="trail-dot" data-label="Packages"
@@ -410,17 +413,14 @@
     <header class="nav" id="nav">
       <div class="nav-inner">
         <a class="brand" href="#top" aria-label="Monset — home">
-          <svg class="mark" viewBox="0 0 64 48" aria-hidden="true">
-            <polygon class="m-back" points="38,10 60,44 44,44" />
-            <polygon class="m-navy" points="8,44 27,16 33,25 24,44" />
-            <polygon class="m-slate" points="27,16 43,44 24,44 33,25" />
-          </svg>
+          <svg class="mark" aria-hidden="true"><use href="#monset-mark" /></svg>
           <span class="brand-word"
             >Monset<span class="brand-co">.co</span></span
           >
         </a>
         <nav class="nav-links" id="nav-links">
           <a href="#friction">Challenges</a>
+          <a href="#route">Process</a>
           <a href="#packages">Packages</a>
           <a href="#work">Work</a>
           <a href="#basin">Contact</a>
@@ -479,21 +479,32 @@
         <div class="stage">
           <div class="wrap hero-inner">
             <h1 class="hero-headline" id="hero-headline">
-              We Add &#8369;50,000 in New Monthly Revenue 
+              <span class="w">We</span> <span class="w">Add</span>
+              <span class="w hl">&#8369;50,000</span> <span class="w">in</span>
+              <span class="w">New</span> <span class="w">Monthly</span>
+              <span class="w">Revenue</span>
             </h1>
-            <h2 class="hero-subhead load-fade" style="animation-delay: 0.45s">
-              for B2B Brands in 90
-              Days or You Don't Pay
-
-            <p class="hero-lede load-fade" style="animation-delay: 0.6s">
-              Stop burning revenue on Marketing that doesn't convert.
+            <p class="hero-subhead load-fade" style="--d: 0.55s">
+              for B2B Brands in 90 Days
+              <span class="promise"
+                >or You Don't Pay<svg
+                  class="promise-line"
+                  viewBox="0 0 200 12"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <path d="M2 8c40-5 90-7 196-3" pathLength="1" /></svg
+              ></span>
             </p>
-            <p class="hero-sub load-fade" style="animation-delay: 0.75s">
-              We fix your funnel, automate you potential customer flow, and
-              scale your operations. Work with our team that has proven to help
-              you serve more and attract more!
+            <p class="hero-lede load-fade" style="--d: 0.7s">
+              Stop burning revenue on marketing that doesn't convert.
             </p>
-            <div class="hero-actions load-fade" style="animation-delay: 0.95s">
+            <p class="hero-sub load-fade" style="--d: 0.82s">
+              We fix your funnel, automate your potential-customer flow, and
+              scale your operations. Work with a team that has proven it can
+              help you serve more and attract more.
+            </p>
+            <div class="hero-actions load-fade" style="--d: 0.95s">
               <a class="btn btn-primary btn-lg btn-wide" href="#basin">
                 Claim your Free 15-Min Revenue Audit
                 <svg
@@ -518,7 +529,7 @@
         </div>
         <div
           class="scroll-cue load-fade"
-          style="animation-delay: 1.2s"
+          style="--d: 1.3s"
           aria-hidden="true"
         >
           <span>Scroll to ascend</span>
@@ -677,6 +688,68 @@
         </div>
       </section>
 
+      <!-- ============ Process — the route up ============ -->
+      <section class="act route" id="route" data-cam="hold">
+        <div class="stage">
+          <div class="wrap">
+            <header class="section-head">
+              <h2 class="section-title">The route up</h2>
+              <p class="section-note">
+                Four steps from first call to a business that runs on its own
+                systems. You always know where you are on the climb.
+              </p>
+            </header>
+
+            <div class="route-wrap">
+              <svg class="route-path" aria-hidden="true">
+                <polyline class="route-path-base" id="route-base" />
+                <polyline class="route-path-live" id="route-live" />
+              </svg>
+              <ol class="route-steps" id="route-steps">
+                <li class="route-step">
+                  <span class="route-node" aria-hidden="true"></span>
+                  <p class="route-n">Step 1</p>
+                  <h3>Free revenue audit</h3>
+                  <p>
+                    A 15-minute call. We look at how customers find you, where
+                    enquiries drop off, and what that is costing you.
+                  </p>
+                </li>
+                <li class="route-step">
+                  <span class="route-node" aria-hidden="true"></span>
+                  <p class="route-n">Step 2</p>
+                  <h3>Your route, mapped</h3>
+                  <p>
+                    A clear plan: which tier fits, what we build first, and the
+                    numbers we will measure. No pressure to sign.
+                  </p>
+                </li>
+                <li class="route-step">
+                  <span class="route-node" aria-hidden="true"></span>
+                  <p class="route-n">Step 3</p>
+                  <h3>Build and connect</h3>
+                  <p>
+                    Website, CRM, SmartClerk and automations, wired together so
+                    leads stop slipping through the cracks.
+                  </p>
+                </li>
+                <li class="route-step">
+                  <span class="route-node route-node--peak" aria-hidden="true"
+                    ><svg viewBox="0 0 16 16"><polygon points="8,2 15,14 1,14" /></svg
+                  ></span>
+                  <p class="route-n">Step 4</p>
+                  <h3>Measure and scale</h3>
+                  <p>
+                    Dashboards show what is working. We tune from there and add
+                    the next system when you are ready to climb higher.
+                  </p>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ============ Packages — the full menu ============ -->
       <section class="act" id="packages" data-cam="hold">
         <div class="stage">
@@ -696,7 +769,7 @@
                 <p class="pkg-for">
                   For businesses with no (or weak) online presence
                 </p>
-                <p class="pkg-price">Get a quote</p>
+                <p class="pkg-price">Get a quote<svg class="pkg-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></p>
                 <ul class="pkg-list">
                   <li>Professional website / landing page</li>
                   <li>Google Business Profile + local visibility</li>
@@ -711,7 +784,7 @@
                 <p class="pkg-for">
                   For businesses getting enquiries but losing track of them
                 </p>
-                <p class="pkg-price">Get a quote</p>
+                <p class="pkg-price">Get a quote<svg class="pkg-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></p>
                 <ul class="pkg-list">
                   <li>Everything in Visibility Starter</li>
                   <li>CRM + lead pipeline</li>
@@ -727,7 +800,7 @@
                 <p class="pkg-for">
                   For businesses ready to scale and automate
                 </p>
-                <p class="pkg-price">Get a quote</p>
+                <p class="pkg-price">Get a quote<svg class="pkg-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></p>
                 <ul class="pkg-list">
                   <li>Everything in Lead Engine</li>
                   <li>AI + instant lead alerts</li>
@@ -743,7 +816,7 @@
                   For established businesses that want to forecast &amp;
                   optimise
                 </p>
-                <p class="pkg-price">Get a quote</p>
+                <p class="pkg-price">Get a quote<svg class="pkg-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></p>
                 <ul class="pkg-list">
                   <li>Everything in Growth Suite</li>
                   <li>Monthly data analysis &amp; reporting</li>
@@ -803,6 +876,69 @@
         </div>
       </section>
 
+      <!-- ============ FAQ ============ -->
+      <section class="act faq" id="faq" data-cam="hold">
+        <div class="stage">
+          <div class="wrap faq-inner">
+            <header class="section-head">
+              <h2 class="section-title">Before you book</h2>
+              <p class="section-note">Straight answers to what people ask us first.</p>
+            </header>
+            <div class="faq-list">
+              <details class="faq-item" name="faq">
+                <summary>Do I have to start with the biggest package?</summary>
+                <div class="faq-a">
+                  <p>
+                    No. Start with the tier that fits where you are today. Each
+                    tier builds on the one before it, so you can add more as
+                    you grow.
+                  </p>
+                </div>
+              </details>
+              <details class="faq-item" name="faq">
+                <summary>What happens on the free audit call?</summary>
+                <div class="faq-a">
+                  <p>
+                    Fifteen minutes. We ask how customers find you and what
+                    happens after they enquire, then show you where revenue is
+                    leaking. You leave with something useful whether or not you
+                    work with us.
+                  </p>
+                </div>
+              </details>
+              <details class="faq-item" name="faq">
+                <summary>Can you work with the tools I already use?</summary>
+                <div class="faq-a">
+                  <p>
+                    Usually, yes. We connect tools like Google Sheets,
+                    GoHighLevel, PayMongo, Zapier and n8n so the software you
+                    already pay for works as one system.
+                  </p>
+                </div>
+              </details>
+              <details class="faq-item" name="faq">
+                <summary>Is the work on this page paid client work?</summary>
+                <div class="faq-a">
+                  <p>
+                    Not yet. The builds under Our work are practice projects
+                    that show our craft. Open any of them and use it live.
+                  </p>
+                </div>
+              </details>
+              <details class="faq-item" name="faq">
+                <summary>Where are you based?</summary>
+                <div class="faq-a">
+                  <p>
+                    Cebu, Philippines. Calls happen online, so you can book a
+                    time below wherever you are.
+                  </p>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ============ Basin — the summit funnel ============ -->
       <section class="act basin" id="basin" data-cam="hold">
         <div class="stage">
@@ -839,19 +975,29 @@
     <!-- ============ Footer ============ -->
     <footer class="footer">
       <div class="wrap footer-inner">
-        <a class="footer-brand" href="#top">
-          <svg class="mark" viewBox="0 0 64 48" aria-hidden="true">
-            <polygon class="m-back" points="38,10 60,44 44,44" />
-            <polygon class="m-navy" points="8,44 27,16 33,25 24,44" />
-            <polygon class="m-slate" points="27,16 43,44 24,44 33,25" />
-          </svg>
-          <span>Monset<span class="brand-co">.co</span></span>
-        </a>
-        <p class="footer-meta">
-          &copy; <span id="year"></span> Monset. Built in Cebu, Philippines.
-        </p>
+        <div class="footer-lead">
+          <a class="footer-brand" href="#top" aria-label="Monset — back to top">
+            <svg class="mark" aria-hidden="true"><use href="#monset-mark" /></svg>
+            <span>Monset<span class="brand-co">.co</span></span>
+          </a>
+          <p class="footer-line">The digital backbone for growing businesses.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="#friction">Challenges</a>
+          <a href="#route">Process</a>
+          <a href="#packages">Packages</a>
+          <a href="#work">Work</a>
+          <a href="#faq">FAQ</a>
+          <a href="#basin">Book a call</a>
+        </nav>
+        <div class="footer-contact">
+          <a class="footer-mail" href="mailto:hello@monset.co">hello@monset.co</a>
+          <p class="footer-meta">
+            &copy; <span id="year"></span> Monset. Built in Cebu, Philippines.
+          </p>
+        </div>
       </div>
-      <p class="footer-privacy">
+      <p class="wrap footer-privacy">
         We respect your privacy. Any details you send us are used only to
         respond to your enquiry and are never sold or shared with third parties.
         No cookies are used to track you across other sites. By contacting us
