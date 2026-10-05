@@ -9,7 +9,7 @@ import { peso } from '../utils/date.js'
 export default function CartButton() {
   const { count, total, open, setOpen } = useCart()
   const { tier } = useShowcase()
-  const fx = tier === 'intermediate'
+  const fx = tier !== 'basic'
   const { pathname } = useLocation()
   const [scope, animate] = useAnimate()
   const [sweep, setSweep] = useState(0)

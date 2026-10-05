@@ -2,7 +2,7 @@ import { SPORTS } from '../../config/site.js'
 import { useShowcase } from '../../context/ShowcaseContext.jsx'
 
 export default function SportTabs({ value, onChange }) {
-  const fx = useShowcase().tier === 'intermediate'
+  const fx = useShowcase().tier !== 'basic'
   const onKeyDown = (e) => {
     const idx = SPORTS.findIndex((s) => s.id === value)
     if (e.key === 'ArrowRight') onChange(SPORTS[(idx + 1) % SPORTS.length].id)

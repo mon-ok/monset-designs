@@ -92,7 +92,7 @@ function SlotRow({ fx, hour, price, peak, inCart, onClick, index }) {
 
 export default function SlotTable({ sportId, dateKey }) {
   const { has, toggle } = useCart();
-  const fx = useShowcase().tier === "intermediate";
+  const fx = useShowcase().tier !== "basic";
   const sport = getSport(sportId);
   const day = getDay(sportId, dateKey);
 

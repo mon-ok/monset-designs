@@ -3,3 +3,6 @@ dist
 .env.local
 .impeccable/review
 .impeccable/mocks
+
+# large local archive, kept out of git (over GitHub 100 MB limit)
+pro-ver.zip

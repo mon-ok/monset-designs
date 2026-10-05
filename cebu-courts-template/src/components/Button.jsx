@@ -21,7 +21,7 @@ export default function Button({ to, href, variant = 'primary', className = '', 
   const { tier } = useShowcase()
   // Intermediate: presses and hovers ease (160ms, strong ease-out). Basic switches instantly.
   const fx =
-    tier === 'intermediate'
+    tier !== 'basic'
       ? 'transition-[transform,box-shadow,filter,background-color] duration-160 ease-out'
       : ''
   const cls = `${base} ${variants[variant]} ${fx} ${className}`

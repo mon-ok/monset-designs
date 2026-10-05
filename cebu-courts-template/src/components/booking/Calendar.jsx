@@ -6,7 +6,7 @@ import { useShowcase } from '../../context/ShowcaseContext.jsx'
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export default function Calendar({ sportId, month, onMonthChange, selectedKey, onSelect, firstKey, lastKey }) {
-  const fx = useShowcase().tier === 'intermediate'
+  const fx = useShowcase().tier !== 'basic'
   const y = month.getFullYear()
   const m = month.getMonth()
   const offset = new Date(y, m, 1).getDay()

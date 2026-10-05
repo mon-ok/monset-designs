@@ -10,10 +10,11 @@ import { getDay } from '../data/availability.js'
 import { addDays, toKey } from '../utils/date.js'
 import { useShowcase } from '../context/ShowcaseContext.jsx'
 import SiteHeader from '../components/intermediate/SiteHeader.jsx'
+import WeekBooking from '../components/pro/WeekBooking.jsx'
 
 export default function Booking() {
   const { tier } = useShowcase()
-  const fx = tier === 'intermediate'
+  const fx = tier !== 'basic'
   const [params, setParams] = useSearchParams()
   const requested = params.get('sport')
   const sportId = SPORTS.some((s) => s.id === requested) ? requested : SPORTS[0].id
@@ -79,13 +80,16 @@ export default function Booking() {
 
         <h1 className={`display text-5xl sm:text-6xl ${fx ? 'mt-6' : 'mt-14'}`}>Book a court</h1>
         <p className="mt-4 max-w-xl text-lg text-ink/70">
-          Choose a sport, pick a date, then add the times and courts you want to your cart.
+          Choose a sport, pick a day, then add the times and courts you want to your cart.
         </p>
 
         <div className="mt-10">
           <SportTabs value={sportId} onChange={setSport} />
         </div>
 
+        {tier === 'pro' ? (
+          <WeekBooking sportId={sportId} firstKey={firstKey} lastKey={lastKey} />
+        ) : (
         <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-start">
           <div className="rounded-3xl border border-line bg-raised p-5 sm:p-7">
             <div className="flex flex-col gap-8 md:flex-row">
@@ -110,6 +114,7 @@ export default function Booking() {
             <SlotTable sportId={sportId} dateKey={selectedKey} />
           </div>
         </div>
+        )}
       </div>
     </main>
     </>

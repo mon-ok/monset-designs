@@ -114,3 +114,19 @@ export const AMENITIES = [
 ]
 
 export const TOTAL_COURTS = SPORTS.reduce((sum, s) => sum + s.courts.length, 0)
+
+/*
+  Pro tier venue tour. `from` is the fraction of the video where each
+  annotation starts. Match these to the client's own footage.
+*/
+export const TOUR = {
+  video: '/pro/venue-tour.mp4',
+  videoWebm: '/pro/venue-tour.webm',
+  poster: '/pro/venue-poster.jpg',
+  chapters: [
+    { from: 0, label: 'Arrival', title: 'Lit courts, open daily', detail: '8 courts for pickleball, badminton and basketball, 6 AM to 10 PM.' },
+    { from: 0.21, label: 'Entry', title: 'Gated walk-in entry', detail: 'A secure gate off the car park, with free parking for 30 cars.' },
+    { from: 0.46, label: 'Courts', title: 'Tournament courts', detail: 'Cushioned surfacing, proper kitchen lines and LED court lighting.' },
+    { from: 0.73, label: 'Amenities', title: 'Food and shade', detail: 'A snack kiosk and a shaded viewing area for friends and family.' },
+  ],
+}

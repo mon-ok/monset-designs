@@ -12,7 +12,7 @@ const EASE = [0.32, 0.72, 0, 1]
 
 export default function CartDrawer() {
   const { items, count, total, remove, clear, open, setOpen } = useCart()
-  const fx = useShowcase().tier === 'intermediate'
+  const fx = useShowcase().tier !== 'basic'
   const [notice, setNotice] = useState(false)
 
   useEffect(() => {
