@@ -5,6 +5,7 @@ import { SITE, TOUR } from '../../config/site.js'
 import { useShowcase } from '../../context/ShowcaseContext.jsx'
 import { Stencil } from '../board/Board.jsx'
 import SlideTextButton from '../kokonutui/slide-text-button.jsx'
+import useMediaQuery from '../../hooks/useMediaQuery.js'
 
 const OUT = [0.23, 1, 0.32, 1]
 const TRAVEL = [0.77, 0, 0.175, 1]
@@ -26,7 +27,9 @@ const chapterAt = (t) => {
 */
 export default function VideoHero() {
   const { loading } = useShowcase()
-  const reduce = useReducedMotion()
+  // Phones skip the scroll-linked drift: the URL bar resizing the viewport mid-scroll makes it jump
+  const phone = useMediaQuery('(max-width: 1023px)')
+  const reduce = useReducedMotion() || phone
   const sectionRef = useRef(null)
   const videoRef = useRef(null)
   const startedRef = useRef(false)
@@ -43,21 +46,23 @@ export default function VideoHero() {
     const v = videoRef.current
     if (!v) return
     startedRef.current = true
-    v.currentTime = 0
+    v.currentTime = TOUR.start
+    v.defaultPlaybackRate = v.playbackRate = TOUR.rate
     setT(0)
     setPlaying(true)
     v.play().catch(() => setPlaying(false))
   }, [])
 
-  // First scroll plays the tour once, without holding the page
+  // First scroll plays the tour once, without holding the page. The tour is
+  // content, so it still plays under reduced motion; only the drift is cut.
   useEffect(() => {
-    if (loading || reduce || startedRef.current) return
+    if (loading || startedRef.current) return
     const onScroll = () => {
       if (window.scrollY > 4 && !startedRef.current) play()
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [loading, reduce, play])
+  }, [loading, play])
 
   // Smooth progress for the chapter bar
   useEffect(() => {
@@ -65,7 +70,7 @@ export default function VideoHero() {
     let raf
     const tick = () => {
       const v = videoRef.current
-      if (v && v.duration) setT(v.currentTime / v.duration)
+      if (v && v.duration) setT(Math.max(0, (v.currentTime - TOUR.start) / (v.duration - TOUR.start)))
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
@@ -76,7 +81,7 @@ export default function VideoHero() {
   const current = TOUR.chapters[chapter]
 
   return (
-    <section ref={sectionRef} className="relative h-[150svh] bg-stage" aria-label="Venue">
+    <section ref={sectionRef} className="relative h-[100svh] min-h-[34rem] bg-stage lg:h-[150svh]" aria-label="Venue">
       <div className="sticky top-0 h-[100svh] min-h-[34rem] overflow-hidden text-white">
         <motion.div className="absolute inset-0" style={reduce ? undefined : { scale: stageScale }}>
           <video
