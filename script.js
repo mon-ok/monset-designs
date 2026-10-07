@@ -36,7 +36,7 @@
   else wire();
 })();
 
-const CONTACT_EMAIL = "hello@monset.co"; // <-- replace with your real inbox
+const CONTACT_EMAIL = "sales@monset.co"; // <-- replace with your real inbox
 
 const svg = (p) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
@@ -350,7 +350,8 @@ function updateRoute() {
   const r = routeSteps.getBoundingClientRect();
   const vh = window.innerHeight;
   const p = clamp01((vh * 0.85 - r.top) / (r.height + vh * 0.3));
-  if (routeLive) routeLive.style.strokeDashoffset = (routeLen * (1 - p)).toFixed(1);
+  if (routeLive)
+    routeLive.style.strokeDashoffset = (routeLen * (1 - p)).toFixed(1);
   routeSteps.style.setProperty("--route-off", (1 - p).toFixed(4));
   routeItems.forEach((li, i) =>
     li.classList.toggle("is-lit", p >= (i / 3) * 0.98),
@@ -475,10 +476,11 @@ if (!reduce) {
   layoutRoute();
   updateRoute();
   // fonts change step heights, so re-measure once they land
-  if (document.fonts) document.fonts.ready.then(() => {
-    layoutRoute();
-    updateRoute();
-  });
+  if (document.fonts)
+    document.fonts.ready.then(() => {
+      layoutRoute();
+      updateRoute();
+    });
 } else {
   layoutRoute();
   routeItems.forEach((li) => li.classList.add("is-lit"));
