@@ -36,7 +36,7 @@
   else wire();
 })();
 
-const CONTACT_EMAIL = "sales@monset.co"; // <-- replace with your real inbox
+const CONTACT_EMAIL = "services@monset.co"; // <-- replace with your real inbox
 
 const svg = (p) =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
