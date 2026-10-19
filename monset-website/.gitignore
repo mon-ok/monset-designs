@@ -1,0 +1,7 @@
+*.md
+.claude
+.impeccable
+# internal pricing + brochures, never deploy
+Monset info/
+node_modules
+dist
