@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm ci --prefix monset-website",
+  "buildCommand": "npm run build --prefix monset-website",
+  "outputDirectory": "monset-website/dist"
+}
