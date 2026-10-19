@@ -232,12 +232,12 @@ export const WORK = [
     url: "https://kalea-heights-monset.vercel.app",
   },
   {
-    name: "Learning portal",
-    status: "Demo build",
-    body: "A learning center portal for students and teachers: courses, progress and a teacher dashboard. Shows how a school can run classes and track progress in one place.",
-    image: lmsShot,
-    clip: lmsClip,
-    url: "https://learning-portal-monset.vercel.app",
+    name: "Court booking",
+    status: "Template",
+    body: "A court booking site for a sports facility: schedules, courts and online reservations. Shows how bookings stop living in chat threads.",
+    image: pickleballShot,
+    clip: pickleballClip,
+    url: "https://pickleball-template.vercel.app",
   },
   {
     name: "Sample POS",
@@ -248,12 +248,12 @@ export const WORK = [
     url: "https://monset-pos-sample.vercel.app/expenses",
   },
   {
-    name: "Court booking",
-    status: "Template",
-    body: "A court booking site for a sports facility: schedules, courts and online reservations. Shows how bookings stop living in chat threads.",
-    image: pickleballShot,
-    clip: pickleballClip,
-    url: "https://pickleball-template.vercel.app",
+    name: "Learning portal",
+    status: "Demo build",
+    body: "A learning center portal for students and teachers: courses, progress and a teacher dashboard. Shows how a school can run classes and track progress in one place.",
+    image: lmsShot,
+    clip: lmsClip,
+    url: "https://learning-portal-monset.vercel.app",
   },
 ];
 export const WORK_CHECKED = "Oct 2026";

@@ -54,13 +54,20 @@ function Packages() {
         as you grow.
       </p>
       {/* packages as tear-off tickets: the stub is the action */}
-      <ul className="tickets mt-9 grid gap-6 md:grid-cols-3" data-seen={seen || undefined}>
+      <ul className="tickets mt-12 grid gap-12 md:grid-cols-3 md:gap-6" data-seen={seen || undefined}>
         {PACKAGES.map((p, i) => (
-          <li key={p.name} className="ticket flex flex-col" style={{ "--i": i }} data-popular={p.popular || undefined}>
+          <li key={p.name} className="ticket relative flex flex-col" style={{ "--i": i }} data-popular={p.popular || undefined}>
+            {p.popular && (
+              <span className="best-seller" aria-label="Best seller">
+                Best
+                <br />
+                seller
+              </span>
+            )}
             <div className="ticket-body flex flex-1 flex-col px-6 pb-6 pt-6">
               <p className="flex items-center gap-3">
                 <span className="text-2xl font-extrabold" style={{ fontStretch: "112%" }}>{p.name}</span>
-                {p.popular && <span className="map-label bg-contour px-1.5 py-0.5 text-night">Most chosen</span>}
+
               </p>
               <p className="mt-1 font-semibold">{p.tagline}</p>
               <p className="mt-3 flex-1 leading-relaxed text-ink-soft">{p.body}</p>
