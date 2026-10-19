@@ -10,16 +10,12 @@ const STAGES = [
   ["Review", "checked again later"],
 ];
 
-// each measure gets three chips that fill in order when its fix is being read
-function MeasureRow({ name, on }) {
+// what we measure for a fix; the three measuring stages are explained once, above the list
+function MeasureRow({ name }) {
   return (
-    <li className="measure flex items-center justify-between gap-4 border-t border-ink/10 py-2" data-on={on || undefined}>
-      <span className="text-[0.9375rem]">{name}</span>
-      <span className="flex shrink-0 gap-1" aria-hidden="true">
-        {STAGES.map(([s], i) => (
-          <span key={s} className={`chip chip-${i} h-2.5 w-7`} style={{ "--d": `${150 + i * 180}ms` }} />
-        ))}
-      </span>
+    <li className="flex items-baseline gap-2.5 border-t border-ink/10 py-2 text-[0.9375rem]">
+      <span className="h-px w-3 shrink-0 translate-y-[-0.3em] bg-contour-deep" aria-hidden="true" />
+      {name}
     </li>
   );
 }
@@ -48,15 +44,17 @@ export default function Fixes() {
           note="Every fix is built for your business, set up by us, and looked after once it's live. Each one comes with the numbers we'll measure it by."
         />
 
-        {/* one legend for every measure below */}
-        <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-[0.875rem] text-ink-soft" aria-label="How we measure">
-          {STAGES.map(([s, note], i) => (
-            <li key={s} className="flex items-center gap-2">
-              <span className={`chip chip-${i} h-2.5 w-7`} />
-              <strong className="text-ink">{s}</strong> {note}
+        {/* how every number below is measured: one survey line, three stations */}
+        <ol className="measure-line relative mt-10 grid max-w-[46rem] grid-cols-3 pt-4 text-[0.875rem] text-ink-soft" aria-label="How we measure each fix">
+          <span className="absolute inset-x-0 top-[5px] h-px bg-ink/25" aria-hidden="true" />
+          {STAGES.map(([s, note]) => (
+            <li key={s} className="relative pr-4">
+              <span className="absolute -top-[15px] left-0 h-2.5 w-2.5 rounded-full border-2 border-contour-deep bg-film" aria-hidden="true" />
+              <strong className="block text-ink">{s}</strong>
+              {note}
             </li>
           ))}
-        </ul>
+        </ol>
 
         <div className="mt-6 lg:grid lg:grid-cols-12 lg:gap-14">
           <ol className="lg:col-span-6">
@@ -83,9 +81,10 @@ export default function Fixes() {
                     </summary>
                     <p className="mt-2 leading-relaxed text-ink-soft">{f.included}</p>
                   </details>
-                  <ul className="mt-6" aria-label="What we measure">
+                  <p className="map-label mt-6 text-ink-soft">We measure</p>
+                  <ul className="mt-2" aria-label="What we measure">
                     {f.measure.map((m) => (
-                      <MeasureRow key={m} name={m} on={on} />
+                      <MeasureRow key={m} name={m} />
                     ))}
                   </ul>
                   <p className="mt-3 text-[0.8125rem] text-ink-soft/80">{f.tech}</p>

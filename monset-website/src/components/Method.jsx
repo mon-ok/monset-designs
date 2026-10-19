@@ -139,7 +139,9 @@ function PinnedMethod() {
           <ol className="mt-5 grid grid-cols-4 gap-2 md:gap-8" aria-hidden="true">
             {METHOD.map((s, i) => (
               <li key={s.short} className="stamp map-label figures" data-on={i < reached || undefined}>
-                <span className="text-contour">{i + 1}</span> <span className="hidden sm:inline">{s.short}</span>
+                <span className="hidden sm:inline">
+                  <span className="text-contour">{i + 1}</span> {s.short}
+                </span>
               </li>
             ))}
           </ol>

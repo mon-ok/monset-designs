@@ -609,12 +609,15 @@ details[open]::details-content {
 }
 .work-screen .slat {
   transform-origin: left center;
-  transition: transform 900ms var(--ease-out);
+  transition:
+    transform 900ms var(--ease-out),
+    opacity 300ms ease 500ms;
   transition-delay: calc(var(--i) * 70ms);
   backface-visibility: hidden;
 }
 .work-screen[data-open] .slat {
   transform: rotateY(-90deg);
+  opacity: 0;
 }
 .work-video {
   opacity: 0;
@@ -730,10 +733,10 @@ details[open]::details-content {
   width: 4.6rem;
   height: 4.6rem;
   border-radius: 50%;
-  border: 2px solid var(--color-pin);
-  outline: 1px solid var(--color-pin);
+  border: 2px solid var(--color-contour-deep);
+  outline: 1px solid var(--color-contour-deep);
   outline-offset: 3px;
-  color: var(--color-pin);
+  color: var(--color-contour-deep);
   font-stretch: 125%;
   font-weight: 800;
   font-size: 0.6875rem;
@@ -766,4 +769,12 @@ details[open]::details-content {
   .tickets:not([data-seen]) .best-seller {
     opacity: 1;
   }
+}
+
+/* survey-grid paper behind the calendar while it loads */
+.survey-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--color-ink) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 7%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
 }

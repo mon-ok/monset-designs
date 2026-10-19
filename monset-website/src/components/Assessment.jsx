@@ -71,7 +71,16 @@ export default function Assessment() {
               <SummitFlag />
               Summit · 1,013 m · pick a time that suits you
             </p>
-            <div className="calendly-reveal calendly-inline-widget" data-url={CALENDLY_URL} style={{ minWidth: 300, height: 720 }} />
+            <div className="calendly-reveal relative">
+              {/* sits under the embed: visible only until Calendly paints over it */}
+              <div className="survey-grid absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center">
+                <p className="map-label text-ink-soft">Loading the calendar</p>
+                <a href={CONTACT.calendly} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                  Open the booking page
+                </a>
+              </div>
+              <div className="calendly-inline-widget relative" data-url={CALENDLY_URL} style={{ minWidth: 300, height: 720 }} />
+            </div>
           </div>
           <p className="mt-3 text-sm text-ink-soft">
             Calendar not loading?{" "}
