@@ -507,7 +507,7 @@ export default function SmoothTab({
           {items.map((item, i) => (
             <div
               aria-labelledby={tabId(i)}
-              className="outline-none focus-visible:ring-2 focus-visible:ring-contour focus-visible:ring-inset"
+              className="overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-contour focus-visible:ring-inset"
               id={panelId(i)}
               inert={i !== selected}
               key={item.id}

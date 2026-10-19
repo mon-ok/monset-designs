@@ -3,6 +3,10 @@ import kaleaShot from "./assets/work/kalea.webp";
 import lmsShot from "./assets/work/lms.webp";
 import posShot from "./assets/work/pos.webp";
 import pickleballShot from "./assets/work/pickleball.webp";
+import kaleaClip from "./assets/work/kalea.mp4";
+import lmsClip from "./assets/work/lms.mp4";
+import posClip from "./assets/work/pos.mp4";
+import pickleballClip from "./assets/work/pickleball.mp4";
 import sheetsLogo from "./assets/logos/googlesheets.svg";
 import ghlLogo from "./assets/logos/gohighlevel.png";
 import paymongoLogo from "./assets/logos/paymongo.png";
@@ -224,6 +228,7 @@ export const WORK = [
     client: true,
     body: "A property showcase for a real estate agent: project film, amenities, 360 tour and unit walkthrough, ending in a viewing booking. Built to turn browsers into booked viewings.",
     image: kaleaShot,
+    clip: kaleaClip,
     url: "https://kalea-heights-monset.vercel.app",
   },
   {
@@ -231,6 +236,7 @@ export const WORK = [
     status: "Demo build",
     body: "A learning center portal for students and teachers: courses, progress and a teacher dashboard. Shows how a school can run classes and track progress in one place.",
     image: lmsShot,
+    clip: lmsClip,
     url: "https://learning-portal-monset.vercel.app",
   },
   {
@@ -238,6 +244,7 @@ export const WORK = [
     status: "Demo build",
     body: "A point of sale with sales, stock and expense tracking. Shows how a shop sees its money in one place instead of three.",
     image: posShot,
+    clip: posClip,
     url: "https://monset-pos-sample.vercel.app/expenses",
   },
   {
@@ -245,6 +252,7 @@ export const WORK = [
     status: "Template",
     body: "A court booking site for a sports facility: schedules, courts and online reservations. Shows how bookings stop living in chat threads.",
     image: pickleballShot,
+    clip: pickleballClip,
     url: "https://pickleball-template.vercel.app",
   },
 ];

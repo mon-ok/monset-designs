@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { MotionConfig } from "motion/react";
 import { scrollToEl, startSmoothScroll } from "./lib/scroll.js";
 import Nav from "./components/Nav.jsx";
 import Hero from "./components/Hero.jsx";
@@ -55,7 +56,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       {loading && <Loader onReveal={reveal} onDone={done} />}
       <ElevationRuler />
       <Nav />
@@ -72,6 +73,6 @@ export default function App() {
       <div className="lg:pl-16">
         <Footer />
       </div>
-    </>
+    </MotionConfig>
   );
 }

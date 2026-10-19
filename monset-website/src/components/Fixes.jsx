@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FIXES, TOOLS } from "../content.js";
 import { MockWindow } from "./FixMocks.jsx";
+import LogoMarquee from "./LogoMarquee.jsx";
 import { SectionHead, band, wrap } from "./marks.jsx";
 
 const STAGES = [
@@ -117,16 +118,12 @@ export default function Fixes() {
             You own what we build. Our custom systems are yours outright, with no per-month licence fees
             like most POS and booking software.
           </p>
-          <div className="lg:col-span-6">
+          {/* min-w-0: the marquee's long track must not widen the grid column on phones */}
+          <div className="min-w-0 lg:col-span-6">
             <p className="map-label text-ink-soft">Works with the tools you already use</p>
-            <ul className="mt-4 flex flex-wrap items-center gap-x-7 gap-y-4">
-              {TOOLS.map((t) => (
-                <li key={t.name} className="flex items-center gap-2 text-[0.9375rem] font-semibold">
-                  <img src={t.logo} alt="" width="24" height="24" className="h-6 w-6 object-contain" />
-                  {t.name}
-                </li>
-              ))}
-            </ul>
+            <div className="mt-3">
+              <LogoMarquee items={TOOLS} />
+            </div>
           </div>
         </div>
       </div>

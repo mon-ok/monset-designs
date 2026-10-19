@@ -37,3 +37,9 @@ export function scrollToEl(el) {
   if (lenis) lenis.scrollTo(el, { offset: OFFSET, duration: 1.2 });
   else el.scrollIntoView();
 }
+
+// freeze the page behind an open overlay (and give it back after)
+export function setScrollLock(locked) {
+  if (lenis) locked ? lenis.stop() : lenis.start();
+  document.documentElement.style.overflow = locked ? "hidden" : "";
+}

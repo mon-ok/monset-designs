@@ -442,3 +442,277 @@ details[open]::details-content {
     filter: none;
   }
 }
+
+/* ---------- questions: an owner's conversation ---------- */
+.chat-q,
+.chat-a,
+.chat-avatar {
+  transition:
+    opacity 320ms var(--ease-out),
+    transform 320ms var(--ease-out),
+    filter 320ms var(--ease-out);
+}
+.chat-exchange[data-step="0"] .chat-q {
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+}
+.chat-q {
+  transform-origin: bottom right;
+}
+.chat-exchange:is([data-step="0"], [data-step="1"]) .chat-avatar {
+  opacity: 0;
+}
+.chat-exchange:not([data-step="3"]) .chat-a {
+  opacity: 0;
+  transform: translateY(8px);
+  filter: blur(3px);
+}
+.chat-a {
+  transform-origin: bottom left;
+}
+.chat-typing {
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+.chat-exchange[data-step="2"] .chat-typing {
+  opacity: 1;
+}
+.chat-typing span {
+  animation: typing 1s ease-in-out infinite;
+}
+.chat-typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.chat-typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+/* morphing worry in the heading (VengeanceUI morph-text, retimed) */
+.morph-word {
+  opacity: 0;
+  animation-name: morph-word;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+/* each word owns 1/5 of the cycle: a short melt in, a long clear hold, a short melt out */
+@keyframes morph-word {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: scale(0.94);
+  }
+  3% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+  17% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+  20%,
+  100% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: scale(1.04);
+  }
+}
+
+/* ---------- where to start: route stamps and tickets ---------- */
+.route-card .route-stamp {
+  transition:
+    opacity 300ms ease,
+    transform 300ms var(--ease-out);
+}
+.route-card:not([data-seen]) .route-stamp {
+  opacity: 0.25;
+  transform: scale(1.06) rotate(-2deg);
+}
+.route-card[data-seen] .route-stamp {
+  transition-delay: calc(var(--i) * 140ms);
+}
+
+.ticket {
+  --notch: 11px;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
+  box-shadow: 0 14px 28px -20px rgb(11 26 46 / 0.45);
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 420ms var(--ease-out);
+}
+.ticket[data-popular] {
+  border-color: var(--color-ink);
+  border-width: 2px;
+}
+.tickets:not([data-seen]) .ticket {
+  opacity: 0;
+  transform: translateY(18px) rotate(-1.5deg);
+}
+.tickets[data-seen] .ticket {
+  transition-delay: calc(var(--i) * 110ms);
+}
+/* the perforation: a dashed tear line with a notch bitten out of each side */
+.ticket-stub {
+  position: relative;
+  border-top: 2px dashed color-mix(in srgb, var(--color-ink) 30%, transparent);
+  color: var(--color-contour-deep);
+  transform-origin: left top;
+  transition:
+    transform 260ms var(--ease-out),
+    background-color 200ms ease;
+}
+.ticket-stub::before,
+.ticket-stub::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--notch) * -1 - 1px);
+  width: calc(var(--notch) * 2);
+  height: calc(var(--notch) * 2);
+  border-radius: 50%;
+  background: var(--color-film);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 18%, transparent);
+}
+.ticket-stub::before {
+  left: calc(var(--notch) * -1 - 1px);
+}
+.ticket-stub::after {
+  right: calc(var(--notch) * -1 - 1px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ticket-stub:hover {
+    background: color-mix(in srgb, var(--color-contour) 12%, transparent);
+    transform: rotate(1.5deg) translateY(2px);
+  }
+}
+.ticket-stub:active {
+  transform: rotate(2.5deg) translateY(4px);
+}
+
+/* ---------- our work: louvre reveal and hover previews ---------- */
+.work-screen .slats {
+  perspective: 900px;
+}
+.work-screen .slat {
+  transform-origin: left center;
+  transition: transform 900ms var(--ease-out);
+  transition-delay: calc(var(--i) * 70ms);
+  backface-visibility: hidden;
+}
+.work-screen[data-open] .slat {
+  transform: rotateY(-90deg);
+}
+.work-video {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.work-video[data-playing] {
+  opacity: 1;
+}
+
+/* ---------- tools marquee ---------- */
+.marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marquee-track {
+  animation: marquee 32s linear infinite;
+}
+@media (hover: hover) and (pointer: fine) {
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- booking: reaching the summit ---------- */
+.summit .flag-pole {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 500ms var(--ease-out);
+}
+.summit .flag-cloth {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 450ms var(--ease-out) 450ms;
+}
+.summit[data-reached] .flag-pole {
+  stroke-dashoffset: 0;
+}
+.summit[data-reached] .flag-cloth {
+  transform: none;
+  animation: flag-wave 1.6s ease-in-out 950ms 2;
+}
+@keyframes flag-wave {
+  50% {
+    transform: skewY(-6deg) scaleX(0.92);
+  }
+}
+.summit .get-tick {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 360ms var(--ease-out);
+  transition-delay: calc(300ms + var(--i) * 220ms);
+}
+.summit[data-reached] .get-tick {
+  stroke-dashoffset: 0;
+}
+.summit .calendly-reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 900ms var(--ease-in-out) 200ms;
+}
+.summit[data-reached] .calendly-reveal {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-typing span,
+  .marquee-track,
+  .summit[data-reached] .flag-cloth {
+    animation: none;
+  }
+  .morph-word {
+    animation: none;
+  }
+  .morph-word:first-child {
+    opacity: 1;
+  }
+  .marquee-track {
+    flex-wrap: wrap;
+  }
+  .marquee-row[aria-hidden] {
+    display: none;
+  }
+  .work-screen .slat {
+    display: none;
+  }
+  .ticket,
+  .route-stamp,
+  .chat-q,
+  .chat-a,
+  .summit .calendly-reveal,
+  .summit .flag-cloth,
+  .summit .flag-pole,
+  .summit .get-tick {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+}

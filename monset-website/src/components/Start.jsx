@@ -1,50 +1,73 @@
+import { useEffect, useRef, useState } from "react";
 import SmoothTab from "@/components/kokonutui/smooth-tab";
 import { PACKAGES, PARTNER_STEPS } from "../content.js";
 import { Arrow, SectionHead, band, wrap } from "./marks.jsx";
 
+// true once the element has scrolled into view (stays true)
+function useSeen(margin = "0px 0px -20% 0px") {
+  const ref = useRef(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && (setSeen(true), io.disconnect()), { rootMargin: margin });
+    ref.current && io.observe(ref.current);
+    return () => io.disconnect();
+  }, [margin]);
+  return [ref, seen];
+}
+
 function Partner() {
+  const [ref, seen] = useSeen();
   return (
-    <div>
+    <div ref={ref}>
       <h3 className="display text-[clamp(1.6rem,2.6vw,2.4rem)]">A partner for the whole job</h3>
       <p className="mt-4 max-w-[44rem] text-[1.0625rem] leading-relaxed text-ink-soft">
         For established businesses we work as an ongoing digital contractor: we assess, plan the
         work in stages, build one fix at a time, and measure each one before moving on. You decide
         the pace and the budget for each stage.
       </p>
-      <ol className="mt-9 grid border-t-2 border-ink sm:grid-cols-4">
+      {/* the route card: each stage stamps in like an inspector's mark */}
+      <ol className="route-card mt-9 grid gap-3 sm:grid-cols-4" data-seen={seen || undefined}>
         {PARTNER_STEPS.map((s, i) => (
-          <li key={s} className="flex items-center gap-3 border-b border-ink/15 py-4 sm:border-b-0 sm:pr-4">
-            <span className="figures text-sm font-bold text-contour-deep">{i + 1}</span>
-            <span className="font-semibold">{s}</span>
+          <li key={s} className="route-stamp flex items-center gap-3 border-2 border-ink px-4 py-4" style={{ "--i": i }}>
+            <span className="figures grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 border-contour-deep text-sm font-bold text-contour-deep">
+              {i + 1}
+            </span>
+            <span className="font-semibold leading-snug">{s}</span>
           </li>
         ))}
       </ol>
-      <a href="#assessment" className="btn-primary mt-9">
-        Book a free Digital Readiness Assessment <Arrow />
+      <a href="#assessment" className="btn-primary group mt-9">
+        Book a free Digital Readiness Assessment
+        <Arrow className="transition-transform duration-200 ease-[var(--ease-out)] group-hover:translate-x-0.5" />
       </a>
     </div>
   );
 }
 
 function Packages() {
+  const [ref, seen] = useSeen();
   return (
-    <div>
+    <div ref={ref}>
       <h3 className="display text-[clamp(1.6rem,2.6vw,2.4rem)]">Three ways to get started</h3>
       <p className="mt-4 max-w-[44rem] text-[1.0625rem] leading-relaxed text-ink-soft">
         Start with what fits where you are today. Each step builds on the last, so you can add more
         as you grow.
       </p>
-      <ul className="mt-9 grid border-t-2 border-ink md:grid-cols-3">
-        {PACKAGES.map((p) => (
-          <li key={p.name} className="flex flex-col border-b border-ink/15 py-7 md:border-b-0 md:border-l md:px-7 md:first:border-l-0 md:first:pl-0">
-            <p className="flex items-center gap-3">
-              <span className="text-2xl font-extrabold" style={{ fontStretch: "112%" }}>{p.name}</span>
-              {p.popular && <span className="map-label bg-contour px-1.5 py-0.5 text-night">Most chosen</span>}
-            </p>
-            <p className="mt-1 font-semibold">{p.tagline}</p>
-            <p className="mt-3 flex-1 leading-relaxed text-ink-soft">{p.body}</p>
-            <a href="#assessment" className="mt-5 inline-flex items-center gap-2 font-semibold text-contour-deep hover:underline">
-              Ask for a quote <Arrow />
+      {/* packages as tear-off tickets: the stub is the action */}
+      <ul className="tickets mt-9 grid gap-6 md:grid-cols-3" data-seen={seen || undefined}>
+        {PACKAGES.map((p, i) => (
+          <li key={p.name} className="ticket flex flex-col" style={{ "--i": i }} data-popular={p.popular || undefined}>
+            <div className="ticket-body flex flex-1 flex-col px-6 pb-6 pt-6">
+              <p className="flex items-center gap-3">
+                <span className="text-2xl font-extrabold" style={{ fontStretch: "112%" }}>{p.name}</span>
+                {p.popular && <span className="map-label bg-contour px-1.5 py-0.5 text-night">Most chosen</span>}
+              </p>
+              <p className="mt-1 font-semibold">{p.tagline}</p>
+              <p className="mt-3 flex-1 leading-relaxed text-ink-soft">{p.body}</p>
+            </div>
+            <a href="#assessment" className="ticket-stub group flex items-center justify-between px-6 py-4 font-semibold">
+              Ask for a quote
+              <Arrow className="transition-transform duration-200 ease-[var(--ease-out)] group-hover:translate-x-0.5" />
             </a>
           </li>
         ))}
